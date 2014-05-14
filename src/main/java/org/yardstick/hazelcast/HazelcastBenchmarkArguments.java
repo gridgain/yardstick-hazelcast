@@ -33,7 +33,7 @@ public class HazelcastBenchmarkArguments {
     private String cfg = "config/hazelcast-benchmark-config.xml";
 
     /** */
-    @Parameter(names = "-sb", description = "Synchronization backups")
+    @Parameter(names = "-sb", description = "Synchronous backups")
     private boolean syncBackups;
 
     /** */
