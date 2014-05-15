@@ -18,13 +18,13 @@ The procedure of benchmarks run is the same as described in Yardstick
 
 The following Hazelcast benchmark properties can be defined in the benchmark configuration:
 
-* `-nn <num>` - number of nodes, it is used by the benchmark driver to wait for the specified number of nodes are started,
+* `-nn <num>` or `nodeNumber <num>` - number of nodes, it is used by the benchmark driver to wait for the specified number of nodes are started,
     to not start the driver while not all nodes are ready
-* `-b <num>` - number of backups
-* `-cfg <path>` - Hazelcast configuration file
-* `-sb` - flag indicating whether synchronous backups are used, asynchronous is default
-* `-cm` - flag indicating whether Hazelcast client is used
-* `-range <num>` - range of keys that are randomly generated for cache operations
+* `-b <num>` or `--backups <num>` - number of backups
+* `-hzcfg <path>` or `--hzConfig <path>` - Hazelcast configuration file
+* `-sb` or `--syncBackups` - flag indicating whether synchronous backups are used, asynchronous is default
+* `-cm` or `--clientMode` - flag indicating whether Hazelcast client is used
+* `-r <num>` or `--range <num>` - range of keys that are randomly generated for cache operations
 
 ## Maven Install
 The easiest way to get started with Yardstick Hazelcast in your project is to use Maven dependency management:

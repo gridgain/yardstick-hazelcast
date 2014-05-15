@@ -22,26 +22,26 @@ import com.beust.jcommander.*;
 @SuppressWarnings({"UnusedDeclaration", "FieldCanBeLocal"})
 public class HazelcastBenchmarkArguments {
     /** */
-    @Parameter(names = "-nn", description = "Node number")
+    @Parameter(names = {"-nn", "--nodeNumber"}, description = "Node number")
     private int nodes = 1;
 
     /** */
-    @Parameter(names = "-b", description = "Backups")
+    @Parameter(names = {"-b", "--backups"}, description = "Backups")
     private int backups;
 
-    @Parameter(names = "-cfg", description = "Configuration file")
-    private String cfg = "config/hazelcast-benchmark-config.xml";
+    @Parameter(names = {"-hzcfg", "--hzConfig"}, description = "Configuration file")
+    private String hzCfg = "config/hazelcast-benchmark-config.xml";
 
     /** */
-    @Parameter(names = "-sb", description = "Synchronous backups")
+    @Parameter(names = {"-sb", "--syncBackups"}, description = "Synchronous backups")
     private boolean syncBackups;
 
     /** */
-    @Parameter(names = "-cm", description = "Client mode")
+    @Parameter(names = {"-cm", "--clientMode"}, description = "Client mode")
     private boolean clientMode;
 
     /** */
-    @Parameter(names = "-range", description = "Key range")
+    @Parameter(names = {"-r", "--range"}, description = "Key range")
     private int range = 1_000_000;
 
     /**
@@ -83,7 +83,7 @@ public class HazelcastBenchmarkArguments {
      * @return Configuration file.
      */
     public String configuration() {
-        return cfg;
+        return hzCfg;
     }
 
     /**
@@ -98,7 +98,7 @@ public class HazelcastBenchmarkArguments {
         return "HazelcastBenchmarkArguments [" +
             "nodes=" + nodes +
             ", backups=" + backups +
-            ", cfg='" + cfg + '\'' +
+            ", hzcfg='" + hzCfg + '\'' +
             ", syncBackups=" + syncBackups +
             ", clientMode=" + clientMode +
             ", range=" + range +
