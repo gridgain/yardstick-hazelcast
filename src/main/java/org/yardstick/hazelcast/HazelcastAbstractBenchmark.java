@@ -16,7 +16,6 @@ package org.yardstick.hazelcast;
 
 import com.hazelcast.core.*;
 import org.yardstick.*;
-import org.yardstick.impl.util.*;
 
 import java.util.*;
 import java.util.concurrent.*;
