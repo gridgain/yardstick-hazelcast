@@ -26,6 +26,13 @@ The following Hazelcast benchmark properties can be defined in the benchmark con
 * `-cm` or `--clientMode` - flag indicating whether Hazelcast client is used
 * `-r <num>` or `--range <num>` - range of keys that are randomly generated for cache operations
 
+For example if we need to run HazelcastNode server on localhost and HazelcastPutBenchmark benchmark on localhost, 
+number of backups is 1, sync backups are used 
+then the following configuration should be specified in run properties file:
+
+* `HOSTS=localhost` 
+* `CONFIGS="-b 1 -sb -dn HazelcastPutBenchmark -sn HazelcastNode"`
+
 ## Maven Install
 The easiest way to get started with Yardstick Hazelcast in your project is to use Maven dependency management:
 
