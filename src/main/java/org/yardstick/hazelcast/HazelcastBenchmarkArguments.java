@@ -30,7 +30,7 @@ public class HazelcastBenchmarkArguments {
     private int backups;
 
     @Parameter(names = {"-hzcfg", "--hzConfig"}, description = "Configuration file")
-    private String hzCfg = "config/hazelcast-benchmark-config.xml";
+    private String hzCfg = "config/hazelcast-config.xml";
 
     /** */
     @Parameter(names = {"-sb", "--syncBackups"}, description = "Synchronous backups")
