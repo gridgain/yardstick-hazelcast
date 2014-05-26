@@ -12,14 +12,14 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast.querymodel;
+package org.yardstickframework.hazelcast.querymodel;
 
 import java.io.*;
 
 /**
  * Person record used for query test.
  */
-public class HazelcastBenchmarkPerson implements Externalizable {
+public class Person implements Externalizable {
     /** Person ID. */
     private int id;
 
@@ -38,7 +38,7 @@ public class HazelcastBenchmarkPerson implements Externalizable {
     /**
      * Constructs empty person.
      */
-    public HazelcastBenchmarkPerson() {
+    public Person() {
         // No-op.
     }
 
@@ -50,7 +50,7 @@ public class HazelcastBenchmarkPerson implements Externalizable {
      * @param lastName Last name.
      * @param salary Salary.
      */
-    public HazelcastBenchmarkPerson(int id, String firstName, String lastName, double salary) {
+    public Person(int id, String firstName, String lastName, double salary) {
         this(id, 0, firstName, lastName, salary);
     }
 
@@ -63,7 +63,7 @@ public class HazelcastBenchmarkPerson implements Externalizable {
      * @param lastName Last name.
      * @param salary Salary.
      */
-    public HazelcastBenchmarkPerson(int id, int orgId, String firstName, String lastName, double salary) {
+    public Person(int id, int orgId, String firstName, String lastName, double salary) {
         this.id = id;
         this.orgId = orgId;
         this.firstName = firstName;
@@ -161,7 +161,7 @@ public class HazelcastBenchmarkPerson implements Externalizable {
 
     /** {@inheritDoc} */
     @Override public boolean equals(Object o) {
-        return this == o || (o instanceof HazelcastBenchmarkPerson) && id == ((HazelcastBenchmarkPerson)o).id;
+        return this == o || (o instanceof Person) && id == ((Person)o).id;
     }
 
     /** {@inheritDoc} */

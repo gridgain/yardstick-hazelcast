@@ -12,14 +12,13 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 import com.hazelcast.client.*;
 import com.hazelcast.client.config.*;
 import com.hazelcast.config.*;
 import com.hazelcast.core.*;
-import org.yardstick.*;
-import org.yardstick.impl.util.*;
+import org.yardstickframework.*;
 
 /**
  * Standalone Hazelcast node.

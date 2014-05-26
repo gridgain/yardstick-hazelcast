@@ -12,7 +12,7 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 import com.beust.jcommander.*;
 
@@ -90,7 +90,7 @@ public class HazelcastBenchmarkArguments {
      * @return Short string.
      */
     public String parametersToString() {
-        return "-nn=" + nodes + "_-b=" + backups + "_sb=" + syncBackups + "_cm=" + clientMode;
+        return "-nn=" + nodes + "-b=" + backups + "-sb=" + syncBackups + "-cm=" + clientMode;
     }
 
     /** {@inheritDoc} */

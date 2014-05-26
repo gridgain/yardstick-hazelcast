@@ -12,14 +12,14 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 /**
- * Hazelcast benchmark that performs put and get operations.
+ * Hazelcast benchmark that performs put operations.
  */
-public class HazelcastPutGetBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastPutBenchmark extends HazelcastAbstractBenchmark {
     /** */
-    public HazelcastPutGetBenchmark() {
+    public HazelcastPutBenchmark() {
         super("map");
     }
 
@@ -27,11 +27,6 @@ public class HazelcastPutGetBenchmark extends HazelcastAbstractBenchmark {
     @Override public void test() throws Exception {
         int key = nextRandom(args.range());
 
-        Object val = map.get(key);
-
-        if (val != null)
-            key = nextRandom(args.range());
-
-        map.put(key, new HazelcastBenchmarkValue(key));
+        map.put(key, new SampleValue(key));
     }
 }

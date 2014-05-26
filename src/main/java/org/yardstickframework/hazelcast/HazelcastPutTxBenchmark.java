@@ -12,7 +12,7 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 import com.hazelcast.core.*;
 import com.hazelcast.transaction.*;
@@ -42,7 +42,7 @@ public class HazelcastPutTxBenchmark extends HazelcastAbstractBenchmark {
         TransactionalMap<Object, Object> txMap = ctx.getMap("map");
 
         try {
-            txMap.put(key, new HazelcastBenchmarkValue(key));
+            txMap.put(key, new SampleValue(key));
 
             ctx.commitTransaction();
         }

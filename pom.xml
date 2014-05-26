@@ -18,10 +18,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.yardstick.hazelcast</groupId>
+    <groupId>org.yardstickframework.hazelcast</groupId>
     <artifactId>yardstick-hazelcast</artifactId>
     <name>Yardstick Hazelcast</name>
-    <version>1.0.0</version>
+    <version>0.6.0</version>
 
     <url>https://github.com/gridgain/yardstick-hazelcast</url>
     <description>The set of Hazelcast benchmarks written by using Yardstick framework.</description>
@@ -40,34 +40,18 @@
 
     <developers>
         <developer>
-            <id>nivanov</id>
-            <name>Nikita Ivanov</name>
-            <email>nivanov@gridgain.com</email>
-        </developer>
-        <developer>
-            <id>dsetrakyan</id>
-            <name>Dmitriy Setrakyan</name>
-            <email>dsetrakyan@gridgain.com</email>
-        </developer>
-        <developer>
-            <id>yzhdanov</id>
-            <name>Yakov Zhdanov</name>
-            <email>yzhdanov@gridgain.com</email>
+            <id>gridgain</id>
+            <name>GridGain</name>
+            <email>mvncentral@gridgain.com</email>
         </developer>
     </developers>
-
-    <repositories>
-        <repository>
-            <!-- Staging repository, will be removed after Yardstick is released. -->
-            <id>test-yardstick-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/central_bundles-2090</url>
-        </repository>
-    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <yardstick.version>RELEASE</yardstick.version>
+        <hazelcast.version>RELEASE</hazelcast.version>
     </properties>
 
     <dependencies>
@@ -104,13 +88,13 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-client</artifactId>
-            <version>3.2.1</version>
+            <version>${hazelcast.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.yardstick</groupId>
+            <groupId>org.yardstickframework</groupId>
             <artifactId>yardstick</artifactId>
-            <version>1.0.0</version>
+            <version>${yardstick.version}</version>
         </dependency>
     </dependencies>
 
@@ -137,9 +121,9 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.yardstick</groupId>
+                                    <groupId>org.yardstickframework</groupId>
                                     <artifactId>yardstick</artifactId>
-                                    <version>1.0.0</version>
+                                    <version>${yardstick.version}</version>
                                     <type>zip</type>
                                     <classifier>resources</classifier>
                                     <outputDirectory>${basedir}</outputDirectory>
@@ -154,7 +138,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <outputDirectory>${basedir}</outputDirectory>
+                    <outputDirectory>${basedir}/libs</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/bin</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>${basedir}/libs</directory>
+                            <includes>
+                                <include>**/yardstick*.jar</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>

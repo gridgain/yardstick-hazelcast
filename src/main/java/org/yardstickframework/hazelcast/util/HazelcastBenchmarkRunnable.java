@@ -12,7 +12,7 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast.util;
+package org.yardstickframework.hazelcast.util;
 
 /**
  * Runnable that is aware of thread index.

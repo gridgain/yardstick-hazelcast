@@ -12,12 +12,12 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 import com.hazelcast.query.*;
-import org.yardstick.*;
-import org.yardstick.hazelcast.querymodel.*;
-import org.yardstick.hazelcast.util.*;
+import org.yardstickframework.*;
+import org.yardstickframework.hazelcast.querymodel.*;
+import org.yardstickframework.hazelcast.util.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.*;
@@ -25,12 +25,12 @@ import java.util.concurrent.atomic.*;
 /**
  * Hazelcast benchmark that performs query operations.
  */
-public class HazelcastQueryBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
     /** Number of threads that populate the cache for query test. */
     private static final int POPULATE_QUERY_THREAD_NUM = Runtime.getRuntime().availableProcessors() * 2;
 
     /** */
-    public HazelcastQueryBenchmark() {
+    public HazelcastSqlQueryBenchmark() {
         super("query");
     }
 
@@ -49,7 +49,7 @@ public class HazelcastQueryBenchmark extends HazelcastAbstractBenchmark {
             @Override public void run(int threadIdx) throws Exception {
                 for (int i = threadIdx; i < args.range() && !Thread.currentThread().isInterrupted();
                      i += POPULATE_QUERY_THREAD_NUM) {
-                    map.put(i, new HazelcastBenchmarkPerson(i, "firstName" + i, "lastName" + i, i * 1000));
+                    map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
 
                     int populatedPersons = cnt.incrementAndGet();
 
@@ -66,9 +66,9 @@ public class HazelcastQueryBenchmark extends HazelcastAbstractBenchmark {
     @Override public void test() throws Exception {
         double salary = RAND.nextDouble() * args.range() * 1000;
 
-        Collection<HazelcastBenchmarkPerson> persons = executeQuery(salary, salary + 1000);
+        Collection<Person> persons = executeQuery(salary, salary + 1000);
 
-        for (HazelcastBenchmarkPerson p : persons) {
+        for (Person p : persons) {
             if (p.getSalary() < salary || p.getSalary() > salary + 1000)
                 throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + (salary + 1000) +
                     ", person=" + p + ']');
@@ -81,8 +81,8 @@ public class HazelcastQueryBenchmark extends HazelcastAbstractBenchmark {
      * @return Query results.
      * @throws Exception If failed.
      */
-    private Collection<HazelcastBenchmarkPerson> executeQuery(double minSalary, double maxSalary) throws Exception {
-        return (Collection<HazelcastBenchmarkPerson>)(Collection<?>)map.values(
+    private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
+        return (Collection<Person>)(Collection<?>)map.values(
             new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
     }
 }

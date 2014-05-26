@@ -12,10 +12,10 @@
  limitations under the License.
  */
 
-package org.yardstick.hazelcast;
+package org.yardstickframework.hazelcast;
 
 import com.hazelcast.core.*;
-import org.yardstick.*;
+import org.yardstickframework.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -68,7 +68,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
     /** {@inheritDoc} */
     @Override public String description() {
-        return args.parametersToString() + '_' + super.description();
+        return args.parametersToString() + '-' + super.description();
     }
 
     /** {@inheritDoc} */
