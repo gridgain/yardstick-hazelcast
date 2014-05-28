@@ -36,6 +36,7 @@ The following Hazelcast benchmark properties can be defined in the benchmark con
 * `-nn <num>` or `--nodeNumber <num>` - Number of nodes (automatically set in `benchmark.properties`), used to wait for the specified number of nodes to start
 * `-b <num>` or `--backups <num>` - Number of backups for every key
 * `-hzcfg <path>` or `--hzConfig <path>` - Path to Hazelcast configuration file
+* `-hzclicfg <path>` or `--hzClientConfig <path>` - Path to Hazelcast client configuration file
 * `-sb` or `--syncBackups` - Flag indicating whether synchronous backups are used, asynchronous is a default
 * `-cm` or `--clientMode` - Flag indicating whether Hazelcast client is used
 * `-r <num>` or `--range <num>` - Range of keys that are randomly generated for cache operations

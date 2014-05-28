@@ -27,14 +27,28 @@ public class HazelcastNode implements BenchmarkServer {
     /** */
     private HazelcastInstance hz;
 
+    /** Client mode. */
+    private boolean clientMode;
+
+    /** */
+    public HazelcastNode() {
+        // No-op.
+    }
+
+    /** */
+    public HazelcastNode(boolean clientMode) {
+        this.clientMode = clientMode;
+    }
+
     /** {@inheritDoc} */
     @Override public void start(BenchmarkConfiguration cfg) throws Exception {
         HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 
         BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-node>");
 
-        if (args.clientMode()) {
-            ClientConfig clientCfg = new XmlClientConfigBuilder(args.configuration()).build();
+        // HazelcastNode can not run in client mode, except the case when it's used inside HazelcastAbstractBenchmark.
+        if (clientMode) {
+            ClientConfig clientCfg = new XmlClientConfigBuilder(args.clientConfiguration()).build();
 
             hz = HazelcastClient.newHazelcastClient(clientCfg);
 

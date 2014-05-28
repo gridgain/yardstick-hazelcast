@@ -32,6 +32,9 @@ public class HazelcastBenchmarkArguments {
     @Parameter(names = {"-hzcfg", "--hzConfig"}, description = "Configuration file")
     private String hzCfg = "config/hazelcast-config.xml";
 
+    @Parameter(names = {"-hzclicfg", "--hzClientConfig"}, description = "Client configuration file")
+    private String hzClientCfg = "config/hazelcast-client-config.xml";
+
     /** */
     @Parameter(names = {"-sb", "--syncBackups"}, description = "Synchronous backups")
     private boolean syncBackups;
@@ -87,6 +90,13 @@ public class HazelcastBenchmarkArguments {
     }
 
     /**
+     * @return Configuration file.
+     */
+    public String clientConfiguration() {
+        return hzClientCfg;
+    }
+
+    /**
      * @return Short string.
      */
     public String parametersToString() {
@@ -98,7 +108,8 @@ public class HazelcastBenchmarkArguments {
         return "HazelcastBenchmarkArguments [" +
             "nodes=" + nodes +
             ", backups=" + backups +
-            ", hzcfg='" + hzCfg + '\'' +
+            ", hzConfig='" + hzCfg + '\'' +
+            ", hzClientCfg='" + hzClientCfg + '\'' +
             ", syncBackups=" + syncBackups +
             ", clientMode=" + clientMode +
             ", range=" + range +

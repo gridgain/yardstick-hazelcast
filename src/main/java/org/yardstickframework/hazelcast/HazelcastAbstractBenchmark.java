@@ -34,7 +34,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
     protected final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 
     /** Node. */
-    private final HazelcastNode node = new HazelcastNode();
+    private HazelcastNode node;
 
     /** Map. */
     protected IMap<Object, Object> map;
@@ -51,6 +51,8 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         super.setUp(cfg);
 
         BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
+
+        node = new HazelcastNode(args.clientMode());
 
         node.start(cfg);
 
