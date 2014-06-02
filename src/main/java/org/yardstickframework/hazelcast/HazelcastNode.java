@@ -93,6 +93,8 @@ public class HazelcastNode implements BenchmarkServer {
             mapCfg.setBackupCount(0);
             mapCfg.setAsyncBackupCount(args.backups());
         }
+
+        mapCfg.setReadBackupData(args.readBackups());
     }
 
     /** {@inheritDoc} */
