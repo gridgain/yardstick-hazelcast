@@ -19,6 +19,7 @@ The following benchmarks are provided:
 3. `HazelcastPutTxBenchmark` - benchmarks transactional distributed cache put operation
 4. `HazelcastPutGetTxBenchmark` - benchmarks transactional distributed cache put and get operations together
 5. `HazelcastSqlQueryBenchmark` - benchmarks distributed SQL query over cached data
+6. `HazelcastSqlQueryPutBenchmark` - benchmarks distributed cache put operation and SQL query over cached data
 
 ## Writing Hazelcast Benchmarks
 All benchmarks extend `HazelcastAbstractBenchmark` class. A new benchmark should also extend this abstract class and implement `test` method. This is the method that is actually benchmarked.
