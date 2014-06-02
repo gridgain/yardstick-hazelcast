@@ -75,9 +75,8 @@ public class HazelcastNode implements BenchmarkServer {
      * @param cfg Hazelcast config.
      * @param name Map name.
      * @param idx Flag to index or not.
-     * @return Map configuration.
      */
-    private MapConfig configure(HazelcastBenchmarkArguments args, Config cfg, String name, boolean idx) {
+    private void configure(HazelcastBenchmarkArguments args, Config cfg, String name, boolean idx) {
         MapConfig mapCfg = cfg.getMapConfig(name);
 
         if (idx) {
@@ -94,8 +93,6 @@ public class HazelcastNode implements BenchmarkServer {
             mapCfg.setBackupCount(0);
             mapCfg.setAsyncBackupCount(args.backups());
         }
-
-        return mapCfg;
     }
 
     /** {@inheritDoc} */

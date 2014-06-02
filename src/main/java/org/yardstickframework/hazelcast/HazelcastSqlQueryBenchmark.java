@@ -66,11 +66,13 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
     @Override public void test() throws Exception {
         double salary = RAND.nextDouble() * args.range() * 1000;
 
-        Collection<Person> persons = executeQuery(salary, salary + 1000);
+        double maxSalary = salary + 1000;
+
+        Collection<Person> persons = executeQuery(salary, maxSalary);
 
         for (Person p : persons) {
-            if (p.getSalary() < salary || p.getSalary() > salary + 1000)
-                throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + (salary + 1000) +
+            if (p.getSalary() < salary || p.getSalary() > maxSalary)
+                throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
                     ", person=" + p + ']');
         }
     }
