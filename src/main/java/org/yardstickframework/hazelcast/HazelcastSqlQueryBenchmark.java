@@ -20,6 +20,7 @@ import org.yardstickframework.hazelcast.querymodel.*;
 import org.yardstickframework.hazelcast.util.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 
 /**
@@ -64,7 +65,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
 
     /** {@inheritDoc} */
     @Override public void test() throws Exception {
-        double salary = RAND.nextDouble() * args.range() * 1000;
+        double salary = ThreadLocalRandom.current().nextDouble() * args.range() * 1000;
 
         double maxSalary = salary + 1000;
 

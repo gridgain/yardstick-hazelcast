@@ -47,6 +47,10 @@ public class HazelcastBenchmarkArguments {
     @Parameter(names = {"-r", "--range"}, description = "Key range")
     private int range = 1_000_000;
 
+    /** */
+    @Parameter(names = {"-rb", "--readBackups"}, description = "Read backups")
+    private boolean readBackups = false;
+
     /**
      * @return Sync backups.
      */
@@ -66,6 +70,13 @@ public class HazelcastBenchmarkArguments {
      */
     public int backups() {
         return backups;
+    }
+
+    /**
+     * @return Read backups flag.
+     */
+    public boolean readBackups() {
+        return readBackups;
     }
 
     /**
@@ -100,7 +111,7 @@ public class HazelcastBenchmarkArguments {
      * @return Short string.
      */
     public String parametersToString() {
-        return "-nn=" + nodes + "-b=" + backups + "-sb=" + syncBackups + "-cm=" + clientMode;
+        return "-nn=" + nodes + "-b=" + backups + "-sb=" + syncBackups + "-cm=" + clientMode + "-rb=" + readBackups;
     }
 
     /** {@inheritDoc} */

@@ -24,9 +24,6 @@ import java.util.concurrent.*;
  * Abstract class for Hazelcast benchmarks.
  */
 public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter {
-    /** Random number generator. */
-    protected static final Random RAND = new Random();
-
     /** Cache name. */
     private final String cacheName;
 
@@ -127,7 +124,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @return Next key.
      */
     protected int nextRandom(int max) {
-        return RAND.nextInt(max);
+        return ThreadLocalRandom.current().nextInt(max);
     }
 
     /**
@@ -136,6 +133,6 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @return Next key.
      */
     protected int nextRandom(int min, int max) {
-        return RAND.nextInt(max - min) + min;
+        return ThreadLocalRandom.current().nextInt(max - min) + min;
     }
 }

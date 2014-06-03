@@ -49,7 +49,7 @@ HOSTS=localhost,localhost
     
 # Note that -dn and -sn, which stand for data node and server node, are 
 # native Yardstick parameters and are documented in Yardstick framework.
-CONFIGS="-b 1 -sm PRIMARY_SYNC -dn HazelcastPutBenchmark -sn HazelcastNode"
+CONFIGS="-b 1 -sb -dn HazelcastPutBenchmark -sn HazelcastNode"
 ```
 
 ## Issues
