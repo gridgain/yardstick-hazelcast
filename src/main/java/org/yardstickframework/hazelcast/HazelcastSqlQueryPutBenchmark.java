@@ -18,6 +18,7 @@ import com.hazelcast.query.*;
 import org.yardstickframework.hazelcast.querymodel.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Hazelcast benchmark that performs put and query operations.
@@ -30,8 +31,10 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
 
     /** {@inheritDoc} */
     @Override public void test() throws Exception {
-        if (RAND.nextBoolean()) {
-            double salary = RAND.nextDouble() * args.range() * 1000;
+        ThreadLocalRandom rnd = ThreadLocalRandom.current();
+
+        if (rnd.nextBoolean()) {
+            double salary = rnd.nextDouble() * args.range() * 1000;
 
             double maxSalary = salary + 1000;
 
@@ -43,7 +46,7 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
                         ", person=" + p + ']');
         }
         else {
-            int i = RAND.nextInt(args.range());
+            int i = rnd.nextInt(args.range());
 
             map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
         }
