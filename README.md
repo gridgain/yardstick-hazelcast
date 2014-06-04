@@ -40,6 +40,7 @@ The following Hazelcast benchmark properties can be defined in the benchmark con
 * `-sb` or `--syncBackups` - Flag indicating whether synchronous backups are used, asynchronous is a default
 * `-cm` or `--clientMode` - Flag indicating whether Hazelcast client is used
 * `-r <num>` or `--range <num>` - Range of keys that are randomly generated for cache operations
+* `-rb` or `--readBackups` - Flag indicating whether backup reads are enabled or not, disabled by default
 
 For example if we need to run 2 `HazelcastNode` servers on localhost with `HazelcastPutBenchmark` benchmark on localhost, with number of backups set to 1, backups are synchronous, then the following configuration should be specified in `benchmark.properties` file:
 
