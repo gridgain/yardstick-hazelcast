@@ -21,7 +21,7 @@
     <groupId>org.yardstickframework.hazelcast</groupId>
     <artifactId>yardstick-hazelcast</artifactId>
     <name>Yardstick Hazelcast</name>
-    <version>0.6.3</version>
+    <version>0.6.4</version>
 
     <url>https://github.com/gridgain/yardstick-hazelcast</url>
     <description>The set of Hazelcast benchmarks written by using Yardstick framework.</description>
@@ -51,7 +51,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <yardstick.version>RELEASE</yardstick.version>
-        <hazelcast.version>RELEASE</hazelcast.version>
+        <hazelcast.version>3.2</hazelcast.version>
     </properties>
 
     <dependencies>
