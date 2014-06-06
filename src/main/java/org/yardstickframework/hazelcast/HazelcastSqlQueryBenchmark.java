@@ -23,6 +23,8 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
 
+import static org.yardstickframework.BenchmarkUtils.*;
+
 /**
  * Hazelcast benchmark that performs query operations.
  */
@@ -39,7 +41,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
     @Override public void setUp(final BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
 
-        cfg.output().println("Populating query data...");
+        println("Populating query data...");
 
         long start = System.nanoTime();
 
@@ -55,12 +57,12 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
                     int populatedPersons = cnt.incrementAndGet();
 
                     if (populatedPersons % 100000 == 0)
-                        cfg.output().println("Populated persons: " + populatedPersons);
+                        println("Populated persons: " + populatedPersons);
                 }
             }
         }, POPULATE_QUERY_THREAD_NUM, "populate-query-person");
 
-        cfg.output().println("Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
+        println("Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
     }
 
     /** {@inheritDoc} */

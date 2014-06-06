@@ -20,6 +20,8 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
 
+import static org.yardstickframework.BenchmarkUtils.*;
+
 /**
  * Standalone Hazelcast node.
  */
@@ -44,7 +46,7 @@ public class HazelcastNode implements BenchmarkServer {
     @Override public void start(BenchmarkConfiguration cfg) throws Exception {
         HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 
-        BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-node>");
+        jcommander(cfg.commandLineArguments(), args, "<hazelcast-node>");
 
         // HazelcastNode can not run in client mode, except the case when it's used inside HazelcastAbstractBenchmark.
         if (clientMode) {
@@ -52,7 +54,7 @@ public class HazelcastNode implements BenchmarkServer {
 
             hz = HazelcastClient.newHazelcastClient(clientCfg);
 
-            cfg.output().println("Hazelcast client started.");
+            println("Hazelcast client started.");
         }
         else {
             Config hzCfg = new XmlConfigBuilder(args.configuration()).build();
@@ -62,7 +64,7 @@ public class HazelcastNode implements BenchmarkServer {
 
             hz = Hazelcast.newHazelcastInstance(hzCfg);
 
-            cfg.output().println("Hazelcast member started.");
+            println("Hazelcast member started.");
         }
 
         assert hz != null;

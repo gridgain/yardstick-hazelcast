@@ -52,7 +52,7 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
             ctx.commitTransaction();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(cfg.error());
 
             ctx.rollbackTransaction();
         }

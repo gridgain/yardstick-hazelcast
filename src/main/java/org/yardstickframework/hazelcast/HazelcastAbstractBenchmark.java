@@ -17,8 +17,9 @@ package org.yardstickframework.hazelcast;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
 
-import java.util.*;
 import java.util.concurrent.*;
+
+import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
  * Abstract class for Hazelcast benchmarks.
@@ -47,7 +48,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
     @Override public void setUp(BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
 
-        BenchmarkUtils.jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
+        jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
 
         node = new HazelcastNode(args.clientMode());
 
@@ -104,7 +105,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         });
 
         if (!nodesStarted()) {
-            cfg.output().println("Waiting for " + (args.nodes() - 1) + " nodes to start...");
+            println("Waiting for " + (args.nodes() - 1) + " nodes to start...");
 
             nodesStartedLatch.await();
         }
