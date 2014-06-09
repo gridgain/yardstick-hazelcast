@@ -41,7 +41,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
     @Override public void setUp(final BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
 
-        println("Populating query data...");
+        println(cfg, "Populating query data...");
 
         long start = System.nanoTime();
 
@@ -57,12 +57,12 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
                     int populatedPersons = cnt.incrementAndGet();
 
                     if (populatedPersons % 100000 == 0)
-                        println("Populated persons: " + populatedPersons);
+                        println(cfg, "Populated persons: " + populatedPersons);
                 }
             }
         }, POPULATE_QUERY_THREAD_NUM, "populate-query-person");
 
-        println("Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
+        println(cfg, "Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
     }
 
     /** {@inheritDoc} */

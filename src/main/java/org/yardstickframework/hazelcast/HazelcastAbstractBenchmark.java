@@ -105,7 +105,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         });
 
         if (!nodesStarted()) {
-            println("Waiting for " + (args.nodes() - 1) + " nodes to start...");
+            println(cfg, "Waiting for " + (args.nodes() - 1) + " nodes to start...");
 
             nodesStartedLatch.await();
         }
