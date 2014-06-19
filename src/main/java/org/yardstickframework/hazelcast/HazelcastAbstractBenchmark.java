@@ -68,7 +68,8 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
     /** {@inheritDoc} */
     @Override public String description() {
-        return args.parametersToString() + '-' + super.description();
+        return cfg.description().isEmpty() ?
+            cfg.driverName() + args.description() + cfg.defaultDescription() : cfg.description();
     }
 
     /** {@inheritDoc} */

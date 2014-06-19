@@ -108,15 +108,15 @@ public class HazelcastBenchmarkArguments {
     }
 
     /**
-     * @return Short string.
+     * @return Description.
      */
-    public String parametersToString() {
+    public String description() {
         return "-nn=" + nodes + "-b=" + backups + "-sb=" + syncBackups + "-cm=" + clientMode + "-rb=" + readBackups;
     }
 
     /** {@inheritDoc} */
     @Override public String toString() {
-        return "HazelcastBenchmarkArguments [" +
+        return getClass().getSimpleName() + " [" +
             "nodes=" + nodes +
             ", backups=" + backups +
             ", hzConfig='" + hzCfg + '\'' +
