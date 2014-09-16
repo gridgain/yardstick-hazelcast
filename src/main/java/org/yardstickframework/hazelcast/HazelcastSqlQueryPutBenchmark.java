@@ -58,6 +58,7 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
      * @return Query results.
      * @throws Exception If failed.
      */
+    @SuppressWarnings("unchecked")
     private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
         return (Collection<Person>)(Collection<?>)map.values(
             new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
