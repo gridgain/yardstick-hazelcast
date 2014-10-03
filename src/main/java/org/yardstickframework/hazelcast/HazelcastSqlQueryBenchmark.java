@@ -66,7 +66,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
     }
 
     /** {@inheritDoc} */
-    @Override public void test() throws Exception {
+    @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         double salary = ThreadLocalRandom.current().nextDouble() * args.range() * 1000;
 
         double maxSalary = salary + 1000;
@@ -78,6 +78,8 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
                 throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
                     ", person=" + p + ']');
         }
+
+        return true;
     }
 
     /**

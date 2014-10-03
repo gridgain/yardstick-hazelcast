@@ -30,7 +30,7 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
     }
 
     /** {@inheritDoc} */
-    @Override public void test() throws Exception {
+    @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         ThreadLocalRandom rnd = ThreadLocalRandom.current();
 
         if (rnd.nextBoolean()) {
@@ -50,6 +50,8 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
 
             map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
         }
+
+        return true;
     }
 
     /**

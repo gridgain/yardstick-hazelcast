@@ -14,9 +14,11 @@
 
 package org.yardstickframework.hazelcast;
 
+import com.hazelcast.client.*;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
 
+import java.util.*;
 import java.util.concurrent.*;
 
 import static org.yardstickframework.BenchmarkUtils.*;
@@ -50,9 +52,15 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
         jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
 
-        node = new HazelcastNode(args.clientMode());
+        HazelcastInstance instance = startedInstance(args.clientMode());
 
-        node.start(cfg);
+        if (instance == null) {
+            node = new HazelcastNode(args.clientMode());
+
+            node.start(cfg);
+        }
+        else
+            node = new HazelcastNode(args.clientMode(), instance);
 
         map = node.hazelcast().getMap(cacheName);
 
@@ -61,15 +69,29 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         waitForNodes();
     }
 
+    /**
+     * @param clientMode Client mode.
+     * @return Started instance.
+     */
+    private static HazelcastInstance startedInstance(boolean clientMode) {
+        Collection<HazelcastInstance> col = clientMode ? HazelcastClient.getAllHazelcastClients() :
+            Hazelcast.getAllHazelcastInstances();
+
+        return col == null || col.isEmpty() ? null : col.iterator().next();
+    }
+
     /** {@inheritDoc} */
     @Override public void tearDown() throws Exception {
-        node.stop();
+        if (node != null)
+            node.stop();
     }
 
     /** {@inheritDoc} */
     @Override public String description() {
-        return cfg.description().isEmpty() ?
-            cfg.driverName() + args.description() + cfg.defaultDescription() : cfg.description();
+        String desc = BenchmarkUtils.description(cfg, this);
+
+        return desc.isEmpty() ?
+            getClass().getSimpleName() + args.description() + cfg.defaultDescription() : desc;
     }
 
     /** {@inheritDoc} */

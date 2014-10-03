@@ -14,6 +14,8 @@
 
 package org.yardstickframework.hazelcast;
 
+import java.util.*;
+
 /**
  * Hazelcast benchmark that performs put operations.
  */
@@ -24,9 +26,11 @@ public class HazelcastPutBenchmark extends HazelcastAbstractBenchmark {
     }
 
     /** {@inheritDoc} */
-    @Override public void test() throws Exception {
+    @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(args.range());
 
         map.put(key, new SampleValue(key));
+
+        return true;
     }
 }

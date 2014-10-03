@@ -17,6 +17,8 @@ package org.yardstickframework.hazelcast;
 import com.hazelcast.core.*;
 import com.hazelcast.transaction.*;
 
+import java.util.*;
+
 import static com.hazelcast.transaction.TransactionOptions.TransactionType.*;
 
 /**
@@ -29,17 +31,17 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
     }
 
     /** {@inheritDoc} */
-    @Override public void test() throws Exception {
+    @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(0, args.range() / 2);
 
         // Repeatable read isolation level is always used.
         TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
 
-        TransactionContext ctx = hazelcast().newTransactionContext(txOpts);
+        TransactionContext tCtx = hazelcast().newTransactionContext(txOpts);
 
-        ctx.beginTransaction();
+        tCtx.beginTransaction();
 
-        TransactionalMap<Object, Object> txMap = ctx.getMap("map");
+        TransactionalMap<Object, Object> txMap = tCtx.getMap("map");
 
         try {
             Object val = txMap.get(key);
@@ -49,12 +51,14 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
 
             txMap.put(key, new SampleValue(key));
 
-            ctx.commitTransaction();
+            tCtx.commitTransaction();
         }
         catch (Exception e) {
             e.printStackTrace(cfg.error());
 
-            ctx.rollbackTransaction();
+            tCtx.rollbackTransaction();
         }
+
+        return true;
     }
 }

@@ -42,6 +42,12 @@ public class HazelcastNode implements BenchmarkServer {
         this.clientMode = clientMode;
     }
 
+    /** */
+    public HazelcastNode(boolean clientMode, HazelcastInstance hz) {
+        this.clientMode = clientMode;
+        this.hz = hz;
+    }
+
     /** {@inheritDoc} */
     @Override public void start(BenchmarkConfiguration cfg) throws Exception {
         HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();

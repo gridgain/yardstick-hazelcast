@@ -14,12 +14,13 @@ The documentation below describes configuration parameters in addition to standa
 ## Provided Benchmarks
 The following benchmarks are provided:
 
-1. `HazelcastPutBenchmark` - benchmarks atomic distributed cache put operation
-2. `HazelcastPutGetBenchmark` - benchmarks atomic distributed cache put and get operations together
-3. `HazelcastPutTxBenchmark` - benchmarks transactional distributed cache put operation
-4. `HazelcastPutGetTxBenchmark` - benchmarks transactional distributed cache put and get operations together
-5. `HazelcastSqlQueryBenchmark` - benchmarks distributed SQL query over cached data
-6. `HazelcastSqlQueryPutBenchmark` - benchmarks distributed SQL query with simultaneous cache updates
+1. `HazelcastGetBenchmark` - benchmarks atomic distributed cache get operation
+2. `HazelcastPutBenchmark` - benchmarks atomic distributed cache put operation
+3. `HazelcastPutGetBenchmark` - benchmarks atomic distributed cache put and get operations together
+4. `HazelcastPutTxBenchmark` - benchmarks transactional distributed cache put operation
+5. `HazelcastPutGetTxBenchmark` - benchmarks transactional distributed cache put and get operations together
+6. `HazelcastSqlQueryBenchmark` - benchmarks distributed SQL query over cached data
+7. `HazelcastSqlQueryPutBenchmark` - benchmarks distributed SQL query with simultaneous cache updates
 
 ## Writing Hazelcast Benchmarks
 All benchmarks extend `HazelcastAbstractBenchmark` class. A new benchmark should also extend this abstract class and implement `test` method. This is the method that is actually benchmarked.
@@ -46,7 +47,7 @@ The following Hazelcast benchmark properties can be defined in the benchmark con
 For example if we need to run 2 `HazelcastNode` servers on localhost with `HazelcastPutBenchmark` benchmark on localhost, with number of backups set to 1, backups are synchronous, then the following configuration should be specified in `benchmark.properties` file:
 
 ```
-HOSTS=localhost,localhost
+SERVER_HOSTS=localhost,localhost
     
 # Note that -dn and -sn, which stand for data node and server node, are 
 # native Yardstick parameters and are documented in Yardstick framework.
