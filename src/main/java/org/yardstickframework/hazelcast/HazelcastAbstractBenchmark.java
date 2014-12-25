@@ -110,31 +110,28 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @throws Exception If failed.
      */
     private void waitForNodes() throws Exception {
-        println(cfg, "Waiting for " + (args.nodes() - 1) + " nodes to start...");
-        while (hazelcast().getCluster().getMembers().size() < 4);
-        println(cfg, "Nodes to started...");
-//        final CountDownLatch nodesStartedLatch = new CountDownLatch(1);
-//
-//        hazelcast().getCluster().addMembershipListener(new MembershipListener() {
-//            @Override public void memberAdded(MembershipEvent evt) {
-//                if (nodesStarted())
-//                    nodesStartedLatch.countDown();
-//            }
-//
-//            @Override public void memberRemoved(MembershipEvent evt) {
-//                // No-op.
-//            }
-//
-//            @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
-//                // No-op.
-//            }
-//        });
-//
-//        if (!nodesStarted()) {
-//            println(cfg, "Waiting for " + (args.nodes() - 1) + " nodes to start...");
-//
-//            nodesStartedLatch.await();
-//        }
+        final CountDownLatch nodesStartedLatch = new CountDownLatch(1);
+
+        hazelcast().getCluster().addMembershipListener(new MembershipListener() {
+            @Override public void memberAdded(MembershipEvent evt) {
+                if (nodesStarted())
+                    nodesStartedLatch.countDown();
+            }
+
+            @Override public void memberRemoved(MembershipEvent evt) {
+                // No-op.
+            }
+
+            @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
+                // No-op.
+            }
+        });
+
+        if (!nodesStarted()) {
+            println(cfg, "Waiting for " + (args.nodes() - 1) + " nodes to start...");
+
+            nodesStartedLatch.await();
+        }
     }
 
     /**
