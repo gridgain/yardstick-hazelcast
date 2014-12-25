@@ -51,6 +51,17 @@ public class HazelcastBenchmarkArguments {
     @Parameter(names = {"-rb", "--readBackups"}, description = "Read backups")
     private boolean readBackups = false;
 
+    /** */
+    @Parameter(names = {"-bs", "--batch"}, description = "Batch size")
+    private int batch = 1000;
+
+    /**
+     * @return Batch size.
+     */
+    public int batchSize() {
+        return batch;
+    }
+
     /**
      * @return Sync backups.
      */
