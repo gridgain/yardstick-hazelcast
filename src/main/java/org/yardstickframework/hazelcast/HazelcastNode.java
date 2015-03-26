@@ -20,6 +20,8 @@ import com.hazelcast.config.*;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
 
+import java.util.*;
+
 import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
@@ -63,6 +65,9 @@ public class HazelcastNode implements BenchmarkServer {
             println(cfg, "Hazelcast client started.");
         }
         else {
+            for (Map.Entry<String, String> env : System.getenv().entrySet())
+                System.getProperties().setProperty(env.getKey(), env.getValue());
+
             Config hzCfg = new XmlConfigBuilder(args.configuration()).build();
 
             configure(args, hzCfg, "map", false);
