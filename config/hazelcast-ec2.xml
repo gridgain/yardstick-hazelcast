@@ -21,6 +21,11 @@
            http://www.hazelcast.com/schema/config/hazelcast-config-3.4.xsd"
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <!-- By default use eth0 interface -->
+     <properties>
+         <property name="hazelcast.local.localAddress">${LOCAL_IP}</property>
+     </properties>
+
     <network>
         <port auto-increment="true">57500</port>
 
