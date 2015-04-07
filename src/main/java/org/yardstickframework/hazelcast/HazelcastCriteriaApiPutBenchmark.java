@@ -17,16 +17,23 @@ package org.yardstickframework.hazelcast;
 import com.hazelcast.query.*;
 import org.yardstickframework.*;
 import org.yardstickframework.hazelcast.querymodel.*;
+import org.yardstickframework.hazelcast.util.*;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.*;
+
+import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
- * Hazelcast benchmark that performs put and query operations.
+ * Hazelcast benchmark that performs criteria API.
  */
-public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastCriteriaApiPutBenchmark extends HazelcastAbstractBenchmark {
+    /** Number of threads that populate the cache for query test. */
+    private static final int POPULATE_QUERY_THREAD_NUM = Runtime.getRuntime().availableProcessors() * 2;
+
     /** */
-    public HazelcastSqlQueryPutBenchmark() {
+    public HazelcastCriteriaApiPutBenchmark() {
         super("query");
     }
 
@@ -34,7 +41,30 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
     @Override public void setUp(final BenchmarkConfiguration cfg) throws Exception {
         super.setUp(cfg);
 
+        println(cfg, "Populating query data...");
+
+        long start = System.nanoTime();
+
+        final AtomicInteger cnt = new AtomicInteger(0);
+
         map.addIndex("salary", true);
+
+        // Populate persons.
+        HazelcastBenchmarkUtils.runMultiThreaded(new HazelcastBenchmarkRunnable() {
+            @Override public void run(int threadIdx) throws Exception {
+                for (int i = threadIdx; i < args.range() && !Thread.currentThread().isInterrupted();
+                     i += POPULATE_QUERY_THREAD_NUM) {
+                    map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
+
+                    int populatedPersons = cnt.incrementAndGet();
+
+                    if (populatedPersons % 100000 == 0)
+                        println(cfg, "Populated persons: " + populatedPersons);
+                }
+            }
+        }, POPULATE_QUERY_THREAD_NUM, "populate-criteria-person");
+
+        println(cfg, "Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
     }
 
     /** {@inheritDoc} */
@@ -51,7 +81,7 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
             for (Person p : persons)
                 if (p.getSalary() < salary || p.getSalary() > maxSalary)
                     throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
-                        ", person=" + p + ']');
+                            ", person=" + p + ']');
         }
         else {
             int i = rnd.nextInt(args.range());
@@ -70,7 +100,6 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
      */
     @SuppressWarnings("unchecked")
     private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
-        return (Collection<Person>)(Collection<?>)map.values(
-            new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
+        return (Collection<Person>)(Collection<?>)map.values(Predicates.between("salary", minSalary, maxSalary));
     }
 }

@@ -26,14 +26,14 @@ import java.util.concurrent.atomic.*;
 import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
- * Hazelcast benchmark that performs query operations.
+ * Hazelcast benchmark that performs criteria API.
  */
-public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastCriteriaApiBenchmark extends HazelcastAbstractBenchmark {
     /** Number of threads that populate the cache for query test. */
     private static final int POPULATE_QUERY_THREAD_NUM = Runtime.getRuntime().availableProcessors() * 2;
 
     /** */
-    public HazelcastSqlQueryBenchmark() {
+    public HazelcastCriteriaApiBenchmark() {
         super("query");
     }
 
@@ -51,7 +51,8 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
 
         // Populate persons.
         HazelcastBenchmarkUtils.runMultiThreaded(new HazelcastBenchmarkRunnable() {
-            @Override public void run(int threadIdx) throws Exception {
+            @Override
+            public void run(int threadIdx) throws Exception {
                 for (int i = threadIdx; i < args.range() && !Thread.currentThread().isInterrupted();
                      i += POPULATE_QUERY_THREAD_NUM) {
                     map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
@@ -62,7 +63,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
                         println(cfg, "Populated persons: " + populatedPersons);
                 }
             }
-        }, POPULATE_QUERY_THREAD_NUM, "populate-query-person");
+        }, POPULATE_QUERY_THREAD_NUM, "populate-criteria-person");
 
         println(cfg, "Finished populating query data in " + ((System.nanoTime() - start) / 1_000_000) + "ms.");
     }
@@ -92,7 +93,6 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
      */
     @SuppressWarnings("unchecked")
     private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
-        return (Collection<Person>)(Collection<?>)map.values(
-            new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
+        return (Collection<Person>)(Collection<?>)map.values(Predicates.between("salary", minSalary, maxSalary));
     }
 }
