@@ -36,18 +36,20 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(0, args.range() / 2);
 
-        // Repeatable read isolation level is always used.
-        TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
-
-        txOpts.setTimeout(1, TimeUnit.SECONDS);
-
-        TransactionContext tCtx = hazelcast().newTransactionContext(txOpts);
-
-        tCtx.beginTransaction();
-
-        TransactionalMap<Object, Object> txMap = tCtx.getMap("map");
+        TransactionContext tCtx = null;
 
         try {
+            // Repeatable read isolation level is always used.
+            TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
+
+            txOpts.setTimeout(1, TimeUnit.SECONDS);
+
+            tCtx = hazelcast().newTransactionContext(txOpts);
+
+            tCtx.beginTransaction();
+
+            TransactionalMap<Object, Object> txMap = tCtx.getMap("map");
+
             Object val = txMap.get(key);
 
             if (val != null)
@@ -62,7 +64,8 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
 
             e.printStackTrace(cfg.error());
 
-            tCtx.rollbackTransaction();
+            if (tCtx != null)
+                tCtx.rollbackTransaction();
         }
 
         return true;
