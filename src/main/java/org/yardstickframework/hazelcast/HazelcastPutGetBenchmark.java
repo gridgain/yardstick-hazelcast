@@ -16,6 +16,8 @@ package org.yardstickframework.hazelcast;
 
 import java.util.*;
 
+import static org.yardstickframework.BenchmarkUtils.*;
+
 /**
  * Hazelcast benchmark that performs put and get operations.
  */
@@ -29,12 +31,19 @@ public class HazelcastPutGetBenchmark extends HazelcastAbstractBenchmark {
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(args.range());
 
-        Object val = map.get(key);
+        try {
+            Object val = map.get(key);
 
-        if (val != null)
-            key = nextRandom(args.range());
+            if (val != null)
+                key = nextRandom(args.range());
 
-        map.put(key, new SampleValue(key));
+            map.put(key, new SampleValue(key));
+        }
+        catch (Exception e){
+            println("Failed put/get entry. Key [" + key + "].");
+
+            e.printStackTrace();
+        }
 
         return true;
     }
