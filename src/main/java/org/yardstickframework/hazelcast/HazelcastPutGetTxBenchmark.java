@@ -65,7 +65,14 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
             e.printStackTrace(cfg.error());
 
             if (tCtx != null)
-                tCtx.rollbackTransaction();
+                try {
+                    tCtx.rollbackTransaction();
+                }
+                catch (Exception ignore){
+                    println("Failed rollback transition. Key [" + key + "].");
+
+                    ignore.printStackTrace();
+                }
         }
 
         return true;
