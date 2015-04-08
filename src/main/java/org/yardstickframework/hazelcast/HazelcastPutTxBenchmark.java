@@ -18,6 +18,7 @@ import com.hazelcast.core.*;
 import com.hazelcast.transaction.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.hazelcast.transaction.TransactionOptions.TransactionType.*;
 
@@ -36,6 +37,8 @@ public class HazelcastPutTxBenchmark extends HazelcastAbstractBenchmark {
 
         // Repeatable read isolation level is always used.
         TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
+
+        txOpts.setTimeout(2, TimeUnit.SECONDS);
 
         TransactionContext tCtx = hazelcast().newTransactionContext(txOpts);
 
