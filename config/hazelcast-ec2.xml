@@ -26,7 +26,8 @@
          <property name="hazelcast.local.localAddress">${LOCAL_IP}</property>
          <property name="hazelcast.operation.call.timeout.millis">1000</property>
          <property name="hazelcast.partition.migration.timeout">5</property>
-         <property name="hazelcast.client.heartbeat.timeout">5000</property>
+         <property name="hazelcast.max.no.heartbeat.seconds">2</property>
+         <property name="hazelcast.client.heartbeat.timeout">1000</property>
      </properties>
 
     <network>
