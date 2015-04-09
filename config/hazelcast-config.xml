@@ -40,9 +40,4 @@
 
         <read-backup-data>true</read-backup-data>
     </map>
-
-    <properties>
-        <property name="hazelcast.operation.call.timeout.millis">2000</property>
-        <property name="hazelcast.client.heartbeat.timeout">5000</property>
-    </properties>
 </hazelcast>
