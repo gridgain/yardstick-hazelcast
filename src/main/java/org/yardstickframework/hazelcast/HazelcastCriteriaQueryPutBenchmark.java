@@ -24,9 +24,10 @@ import java.util.concurrent.*;
 /**
  * Hazelcast benchmark that performs put and query operations.
  */
-public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastCriteriaQueryPutBenchmark extends HazelcastAbstractBenchmark {
+
     /** */
-    public HazelcastSqlQueryPutBenchmark() {
+    public HazelcastCriteriaQueryPutBenchmark() {
         super("query");
     }
 
@@ -68,7 +69,6 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
      */
     @SuppressWarnings("unchecked")
     private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
-        return (Collection<Person>)(Collection<?>)map.values(
-            new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
+        return (Collection<Person>)(Collection<?>)map.values(Predicates.between("salary", minSalary, maxSalary));
     }
 }

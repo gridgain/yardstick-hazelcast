@@ -47,8 +47,6 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
 
         final AtomicInteger cnt = new AtomicInteger(0);
 
-        map.addIndex("salary", true);
-
         // Populate persons.
         HazelcastBenchmarkUtils.runMultiThreaded(new HazelcastBenchmarkRunnable() {
             @Override public void run(int threadIdx) throws Exception {

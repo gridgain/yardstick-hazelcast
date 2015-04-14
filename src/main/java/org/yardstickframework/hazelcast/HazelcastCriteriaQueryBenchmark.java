@@ -28,12 +28,12 @@ import static org.yardstickframework.BenchmarkUtils.*;
 /**
  * Hazelcast benchmark that performs criteria API.
  */
-public class HazelcastCriteriaApiPutBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastCriteriaQueryBenchmark extends HazelcastAbstractBenchmark {
     /** Number of threads that populate the cache for query test. */
     private static final int POPULATE_QUERY_THREAD_NUM = Runtime.getRuntime().availableProcessors() * 2;
 
     /** */
-    public HazelcastCriteriaApiPutBenchmark() {
+    public HazelcastCriteriaQueryBenchmark() {
         super("query");
     }
 
@@ -46,8 +46,6 @@ public class HazelcastCriteriaApiPutBenchmark extends HazelcastAbstractBenchmark
         long start = System.nanoTime();
 
         final AtomicInteger cnt = new AtomicInteger(0);
-
-        map.addIndex("salary", true);
 
         // Populate persons.
         HazelcastBenchmarkUtils.runMultiThreaded(new HazelcastBenchmarkRunnable() {
@@ -69,24 +67,16 @@ public class HazelcastCriteriaApiPutBenchmark extends HazelcastAbstractBenchmark
 
     /** {@inheritDoc} */
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
-        ThreadLocalRandom rnd = ThreadLocalRandom.current();
+        double salary = ThreadLocalRandom.current().nextDouble() * args.range() * 1000;
 
-        if (rnd.nextBoolean()) {
-            double salary = rnd.nextDouble() * args.range() * 1000;
+        double maxSalary = salary + 1000;
 
-            double maxSalary = salary + 1000;
+        Collection<Person> persons = executeQuery(salary, maxSalary);
 
-            Collection<Person> persons = executeQuery(salary, maxSalary);
-
-            for (Person p : persons)
-                if (p.getSalary() < salary || p.getSalary() > maxSalary)
-                    throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
-                            ", person=" + p + ']');
-        }
-        else {
-            int i = rnd.nextInt(args.range());
-
-            map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
+        for (Person p : persons) {
+            if (p.getSalary() < salary || p.getSalary() > maxSalary)
+                throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
+                    ", person=" + p + ']');
         }
 
         return true;
