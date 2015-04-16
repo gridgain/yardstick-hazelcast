@@ -44,7 +44,7 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
         TransactionalMap<Object, Object> txMap = tCtx.getMap("map");
 
         try {
-            Object val = txMap.get(key);
+            Object val = txMap.getForUpdate(key);
 
             if (val != null)
                 key = nextRandom(args.range() / 2, args.range());
