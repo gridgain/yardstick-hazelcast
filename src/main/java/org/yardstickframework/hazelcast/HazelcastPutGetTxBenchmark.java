@@ -38,7 +38,7 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
         int oldKey = key;
 
         // Repeatable read isolation level is always used.
-        TransactionOptions txOpts = new TransactionOptions().setTransactionType(LOCAL);
+        TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
 
         TransactionContext tCtx = hazelcast().newTransactionContext(txOpts);
 
