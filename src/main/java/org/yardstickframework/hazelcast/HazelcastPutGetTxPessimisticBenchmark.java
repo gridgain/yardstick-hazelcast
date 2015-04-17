@@ -16,7 +16,6 @@ package org.yardstickframework.hazelcast;
 
 import com.hazelcast.core.*;
 import com.hazelcast.transaction.*;
-import org.yardstickframework.*;
 
 import java.util.*;
 
@@ -25,17 +24,15 @@ import static com.hazelcast.transaction.TransactionOptions.TransactionType.*;
 /**
  * Hazelcast benchmark that performs transactional put and get operations.
  */
-public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastPutGetTxPessimisticBenchmark extends HazelcastAbstractBenchmark {
     /** */
-    public HazelcastPutGetTxBenchmark() {
+    public HazelcastPutGetTxPessimisticBenchmark() {
         super("map");
     }
 
     /** {@inheritDoc} */
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(0, args.range() / 2);
-
-        int oldKey = key;
 
         // Repeatable read isolation level is always used.
         TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
@@ -57,9 +54,7 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
             tCtx.commitTransaction();
         }
         catch (Exception e) {
-            BenchmarkUtils.println(cfg, "Transaction will be rollback for key: [" + key + "]."
-                + " Old key: [" + oldKey + "]");
-            //e.printStackTrace(cfg.error());
+            e.printStackTrace(cfg.error());
 
             tCtx.rollbackTransaction();
         }
