@@ -16,6 +16,7 @@ package org.yardstickframework.hazelcast;
 
 import com.hazelcast.core.*;
 import com.hazelcast.transaction.*;
+import org.yardstickframework.*;
 
 import java.util.*;
 
@@ -33,6 +34,8 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
     /** {@inheritDoc} */
     @Override public boolean test(Map<Object, Object> ctx) throws Exception {
         int key = nextRandom(0, args.range() / 2);
+
+        int oldKey = key;
 
         // Repeatable read isolation level is always used.
         TransactionOptions txOpts = new TransactionOptions().setTransactionType(TWO_PHASE);
@@ -54,7 +57,9 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
             tCtx.commitTransaction();
         }
         catch (Exception e) {
-            e.printStackTrace(cfg.error());
+            BenchmarkUtils.println(cfg, "Transaction will be rollback for key: [" + key + "]."
+                + " Old key: [" + oldKey + "]");
+            //e.printStackTrace(cfg.error());
 
             tCtx.rollbackTransaction();
         }
