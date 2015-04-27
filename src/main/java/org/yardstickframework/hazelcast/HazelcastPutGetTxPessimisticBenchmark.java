@@ -20,6 +20,7 @@ import com.hazelcast.transaction.*;
 import java.util.*;
 
 import static com.hazelcast.transaction.TransactionOptions.TransactionType.*;
+import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
  * Hazelcast benchmark that performs transactional put and get operations.
@@ -54,6 +55,8 @@ public class HazelcastPutGetTxPessimisticBenchmark extends HazelcastAbstractBenc
             tCtx.commitTransaction();
         }
         catch (Exception e) {
+            println(cfg, "Yardstick transaction will be rollback.");
+
             e.printStackTrace(cfg.error());
 
             tCtx.rollbackTransaction();
