@@ -20,13 +20,14 @@ import com.hazelcast.transaction.*;
 import java.util.*;
 
 import static com.hazelcast.transaction.TransactionOptions.TransactionType.*;
+import static org.yardstickframework.BenchmarkUtils.*;
 
 /**
  * Hazelcast benchmark that performs transactional put and get operations.
  */
-public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
+public class HazelcastPutGetTxPessimisticBenchmark extends HazelcastAbstractBenchmark {
     /** */
-    public HazelcastPutGetTxBenchmark() {
+    public HazelcastPutGetTxPessimisticBenchmark() {
         super("map");
     }
 
@@ -44,7 +45,7 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
         TransactionalMap<Object, Object> txMap = tCtx.getMap("map");
 
         try {
-            Object val = txMap.get(key);
+            Object val = txMap.getForUpdate(key);
 
             if (val != null)
                 key = nextRandom(args.range() / 2, args.range());
@@ -54,6 +55,8 @@ public class HazelcastPutGetTxBenchmark extends HazelcastAbstractBenchmark {
             tCtx.commitTransaction();
         }
         catch (Exception e) {
+            println(cfg, "Yardstick transaction will be rollback.");
+
             e.printStackTrace(cfg.error());
 
             tCtx.rollbackTransaction();
