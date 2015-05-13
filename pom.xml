@@ -49,7 +49,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <yardstick.version>RELEASE</yardstick.version>
-        <hazelcast.version>RELEASE</hazelcast.version>
+        <hazelcast.version>3.4.2</hazelcast.version>
     </properties>
 
     <dependencies>

@@ -76,6 +76,8 @@ public class HazelcastNode implements BenchmarkServer {
             hz = Hazelcast.newHazelcastInstance(hzCfg);
 
             println(cfg, "Hazelcast member started.");
+            println(cfg, "Hazelcast config: [" + args + "].");
+            println(cfg, "Hazelcast benchmark config: [" + cfg + "].");
         }
 
         assert hz != null;
