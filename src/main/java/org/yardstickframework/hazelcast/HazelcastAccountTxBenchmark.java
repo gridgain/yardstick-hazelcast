@@ -62,10 +62,10 @@ public class HazelcastAccountTxBenchmark extends HazelcastAbstractBenchmark {
                     i += POPULATE_THREAD_NUM) {
                     map.put(i, new Account(100_000));
 
-                    int populatedPersons = cnt.incrementAndGet();
+                    int populatedAccounts = cnt.incrementAndGet();
 
-                    if (populatedPersons % 100000 == 0)
-                        println(cfg, "Populated accounts: " + populatedPersons);
+                    if (populatedAccounts % 100000 == 0)
+                        println(cfg, "Populated accounts: " + populatedAccounts);
                 }
             }
         }, POPULATE_THREAD_NUM, "populate-tx-account");
@@ -93,7 +93,7 @@ public class HazelcastAccountTxBenchmark extends HazelcastAbstractBenchmark {
 
             for (Integer id : accountIds) {
                 // Lock the key (pessimistic tx)
-                Account acc = (Account)txMap.getForUpdate(accountIds);
+                Account acc = (Account)txMap.getForUpdate(id);
 
                 if (acc == null)
                     throw new Exception("Failed to find accounts: " + accountIds);
