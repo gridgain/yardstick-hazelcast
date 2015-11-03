@@ -21,7 +21,7 @@
     <groupId>org.yardstickframework.hazelcast</groupId>
     <artifactId>yardstick-hazelcast</artifactId>
     <name>Yardstick Hazelcast</name>
-    <version>0.7.0</version>
+    <version>0.8.0</version>
 
     <url>https://github.com/gridgain/yardstick-hazelcast</url>
     <description>The set of Hazelcast benchmarks written by using Yardstick framework.</description>
