@@ -22,9 +22,11 @@ import com.hazelcast.map.EntryProcessor;
 import java.util.Map;
 
 /**
+ *
  */
 public class HazelcastAtomicRetriesBenchmark extends HazelcastFailoverAbstractBenchmark {
     /**
+     *
      */
     public HazelcastAtomicRetriesBenchmark() {
         super("map");
@@ -65,6 +67,7 @@ public class HazelcastAtomicRetriesBenchmark extends HazelcastFailoverAbstractBe
     }
 
     /**
+     *
      */
     private static class TestEntryProcessor implements EntryProcessor {
         /** Serial version uid. */
@@ -82,6 +85,7 @@ public class HazelcastAtomicRetriesBenchmark extends HazelcastFailoverAbstractBe
     }
 
     /**
+     *
      */
     private static class TestEntryBackupProcessor implements EntryBackupProcessor {
         /** Serial version uid. */

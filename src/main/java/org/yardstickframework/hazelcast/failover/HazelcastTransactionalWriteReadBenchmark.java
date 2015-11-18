@@ -29,9 +29,11 @@ import static com.hazelcast.transaction.TransactionOptions.TransactionType.TWO_P
 import static org.yardstickframework.BenchmarkUtils.println;
 
 /**
+ *
  */
 public class HazelcastTransactionalWriteReadBenchmark extends HazelcastFailoverAbstractBenchmark {
     /**
+     *
      */
     public HazelcastTransactionalWriteReadBenchmark() {
         super("map");
