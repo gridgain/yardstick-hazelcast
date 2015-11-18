@@ -73,11 +73,13 @@ public class HazelcastNode implements BenchmarkServer {
             configure(args, hzCfg, "map", false);
             configure(args, hzCfg, "query", true);
 
+            println(cfg, "Starting Hazelcast with configuration: " + hzCfg);
+
             hz = Hazelcast.newHazelcastInstance(hzCfg);
 
             println(cfg, "Hazelcast member started.");
-            println(cfg, "Hazelcast config: [" + args + "].");
-            println(cfg, "Hazelcast benchmark config: [" + cfg + "].");
+            println(cfg, "Hazelcast benchmark arguments: " + args);
+            println(cfg, "Hazelcast benchmark config: " + cfg);
         }
 
         assert hz != null;

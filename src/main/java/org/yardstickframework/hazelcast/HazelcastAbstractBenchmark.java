@@ -28,7 +28,7 @@ import static org.yardstickframework.BenchmarkUtils.*;
  */
 public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter {
     /** Cache name. */
-    private final String cacheName;
+    protected final String cacheName;
 
     /** Arguments. */
     protected final HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
