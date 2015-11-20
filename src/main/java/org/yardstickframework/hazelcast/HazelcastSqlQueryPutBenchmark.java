@@ -15,16 +15,26 @@
 package org.yardstickframework.hazelcast;
 
 import com.hazelcast.query.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.yardstickframework.*;
 import org.yardstickframework.hazelcast.querymodel.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 
+import static org.yardstickframework.BenchmarkUtils.println;
+
 /**
  * Hazelcast benchmark that performs put and query operations.
  */
 public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
+    /** */
+    private AtomicInteger putCnt = new AtomicInteger();
+
+    /** */
+    private AtomicInteger qryCnt = new AtomicInteger();
+
+
     /** */
     public HazelcastSqlQueryPutBenchmark() {
         super("query");
@@ -70,5 +80,12 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
     private Collection<Person> executeQuery(double minSalary, double maxSalary) throws Exception {
         return (Collection<Person>)(Collection<?>)map.values(
             new SqlPredicate("salary >= " + minSalary + " and salary <= " + maxSalary));
+    }
+
+    /** {@inheritDoc} */
+    @Override public void tearDown() throws Exception {
+        println(cfg, "Finished sql query put benchmark [putCnt=" + putCnt.get() + ", qryCnt=" + qryCnt.get() + ']');
+
+        super.tearDown();
     }
 }
