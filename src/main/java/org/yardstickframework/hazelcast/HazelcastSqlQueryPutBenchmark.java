@@ -60,11 +60,15 @@ public class HazelcastSqlQueryPutBenchmark extends HazelcastAbstractBenchmark {
                 if (p.getSalary() < salary || p.getSalary() > maxSalary)
                     throw new Exception("Invalid person retrieved [min=" + salary + ", max=" + maxSalary +
                         ", person=" + p + ']');
+
+            qryCnt.incrementAndGet();
         }
         else {
             int i = rnd.nextInt(args.range());
 
             map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
+
+            putCnt.incrementAndGet();
         }
 
         return true;
