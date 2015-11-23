@@ -97,8 +97,8 @@ public class HazelcastNode implements BenchmarkServer {
         MapConfig mapCfg = cfg.getMapConfig(name);
 
         if (idx) {
-            mapCfg.addMapIndexConfig(new MapIndexConfig("id", false));
-            mapCfg.addMapIndexConfig(new MapIndexConfig("orgId", false));
+            mapCfg.addMapIndexConfig(new MapIndexConfig("id", true));
+            mapCfg.addMapIndexConfig(new MapIndexConfig("orgId", true));
             mapCfg.addMapIndexConfig(new MapIndexConfig("salary", true));
         }
 
