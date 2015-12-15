@@ -39,14 +39,13 @@ public class HazelcastPutGetBatchBenchmark extends HazelcastAbstractBenchmark {
 
         Map<Integer, SampleValue> updates = new TreeMap<>();
 
-        for (Map.Entry<Object, Object> e : vals.entrySet()) {
-            if (e.getValue() != null) {
-                int key = nextRandom(args.range());
+        for (Object key : keys) {
+            Object val = vals.get(key);
 
-                updates.put(key, new SampleValue(key));
-            }
-            else
-                updates.put((Integer)e.getKey(), new SampleValue((Integer)e.getKey()));
+            if (val != null)
+                key = nextRandom(args.range());
+
+            updates.put((Integer)key, new SampleValue((Integer)key));
         }
 
         map.putAll(updates);
