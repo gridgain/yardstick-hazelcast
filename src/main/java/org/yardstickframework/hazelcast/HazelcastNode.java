@@ -112,6 +112,8 @@ public class HazelcastNode implements BenchmarkServer {
         }
 
         mapCfg.setReadBackupData(args.readBackups());
+
+        println("Cache configured with the following parameters: " + mapCfg);
     }
 
     /** {@inheritDoc} */

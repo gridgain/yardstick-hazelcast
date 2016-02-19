@@ -83,7 +83,7 @@ public class HazelcastTransactionalWriteReadBenchmark extends HazelcastFailoverA
             final Long newVal = oldVal == null ? 0 : oldVal + 1;
 
             for (String key : keys)
-                txMap.put(key, newVal);
+                txMap.set(key, newVal);
 
             tCtx.commitTransaction();
         }

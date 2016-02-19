@@ -52,7 +52,7 @@ public class HazelcastSqlQueryBenchmark extends HazelcastAbstractBenchmark {
             @Override public void run(int threadIdx) throws Exception {
                 for (int i = threadIdx; i < args.range() && !Thread.currentThread().isInterrupted();
                      i += POPULATE_QUERY_THREAD_NUM) {
-                    map.put(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
+                    map.set(i, new Person(i, "firstName" + i, "lastName" + i, i * 1000));
 
                     int populatedPersons = cnt.incrementAndGet();
 

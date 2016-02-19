@@ -50,7 +50,7 @@ public class HazelcastFailoverNode extends HazelcastNode {
 
         IMap<Integer, BenchmarkConfiguration> srvsCfgsCache = hazelcast().getMap("serversConfigs");
 
-        srvsCfgsCache.put(cfg.memberId(), cfg);
+        srvsCfgsCache.set(cfg.memberId(), cfg);
 
         println("Put at cache [" + cfg.memberId() + "=" + cfg + "]");
     }

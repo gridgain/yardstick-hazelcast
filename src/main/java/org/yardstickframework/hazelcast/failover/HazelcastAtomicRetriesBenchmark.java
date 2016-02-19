@@ -45,7 +45,7 @@ public class HazelcastAtomicRetriesBenchmark extends HazelcastFailoverAbstractBe
                 break;
 
             case 1:
-                map.put(key, String.valueOf(key));
+                map.set(key, String.valueOf(key));
 
                 break;
 
