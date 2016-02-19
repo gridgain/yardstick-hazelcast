@@ -54,6 +54,66 @@ SERVER_HOSTS=localhost,localhost
 CONFIGS="-b 1 -sb -dn HazelcastPutBenchmark -sn HazelcastNode"
 ```
 
+## Running on Amazon
+
+This repo contains all necessary scripts and properties files for a comparison Hazelcast with other products.
+You can easy run benchmark by using [yardstick-docker](https://github.com/yardstick-benchmarks/yardstick-docker) extension, but it might have an influence on performance.
+
+For running on Amazon EC2 need to perform the following steps:
+
+* Run Amazon EC2 instances. Choose number of instances and hardware according to your requirements.
+
+The following actions need to perform on all instances:
+
+* Install Java, Maven and Git.
+* Clone this repository (on all nodes path should be the same) and perform `mvn clean package` command.
+* Change `SERVER_HOSTS` and `DRIVER_HOSTS` properties in `config/benchmark.properties` file. 
+`SERVER_HOSTS` is comma-separated list of IP addresses where servers should be started, one server per host. 
+`DRIVER_HOSTS` is comma-separated list of IP addresses where drivers should be started, one driver per host, if the 
+property is not defined then the driver will be run on localhost.
+Property file contains many useful information about benchmarks such as `list of benchmarks`, `JVM opts` and etc. More details there
+[Properties And Command Line Arguments](https://github.com/gridgain/yardstick#properties-and-command-line-arguments)
+
+* Use `config/hazelcast-ec2.xml` config which using `AWS discovery` or update IP addresses in network section from 
+`config/hazelcast-config.xml` and `config/hazelcast-client-config.xml` files. For example:
+
+```
+config/hazelcast-client-config.xml
+
+...
+  <network>
+    <cluster-members>
+      <address>XXX.XXX.XXX.1:57500</address>
+      <address>XXX.XXX.XXX.2:57500</address>
+      <address>XXX.XXX.XXX.3:57500</address>
+    </cluster-members>
+    <connection-timeout>10000</connection-timeout>
+    <connection-attempt-limit>50</connection-attempt-limit>
+  </network>
+...
+```
+
+```
+config/hazelcast-config.xml
+
+...  
+  <network>
+    <port auto-increment="true">57500</port>
+    <join>
+      <multicast enabled="false"/>
+      <tcp-ip enabled="true">
+        <member>XXX.XXX.XXX.1:57500</member>
+        <member>XXX.XXX.XXX.2:57500</member>
+        <member>XXX.XXX.XXX.3:57500</member>
+      </tcp-ip>
+    </join>
+  </network>
+...
+```
+* Perform `./bin/benchmark-run-all.sh` script. For more details about running scripts see [Running Yardstick Benchmarks](https://github.com/gridgain/yardstick#running-yardstick-benchmarks).
+* After execution the script in `result` folder will be saved to results of benchmarks. For visualisation of results can be used `bin/jfreechart-graph-gen.sh` script. 
+For more details about the script see [JFreeChart Graphs](https://github.com/gridgain/yardstick#jfreechart-graphs).
+
 ## Issues
 Use GitHub [issues](https://github.com/gridgain/yardstick-hazelcast/issues) to file bugs.
 
