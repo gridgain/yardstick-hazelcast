@@ -18,7 +18,7 @@
     Hazelcast configuration file to startup hazelcast instance.
 -->
 <hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config
-           http://www.hazelcast.com/schema/config/hazelcast-config-3.5.xsd"
+           http://www.hazelcast.com/schema/config/hazelcast-config-3.6.xsd"
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <network>
@@ -28,6 +28,12 @@
             <multicast enabled="true"/>
         </join>
     </network>
+
+    <serialization>
+        <data-serializable-factories>
+            <data-serializable-factory factory-id="1">org.yardstickframework.hazelcast.SampleValueSerializableFactory</data-serializable-factory>
+        </data-serializable-factories>
+    </serialization>
 
     <map name="map">
         <statistics-enabled>false</statistics-enabled>

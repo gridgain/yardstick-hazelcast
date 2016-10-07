@@ -18,7 +18,7 @@
     Hazelcast client configuration file to startup hazelcast instance.
 -->
 <hazelcast-client xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
-                  http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.5.xsd"
+                  http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.6.xsd"
                   xmlns="http://www.hazelcast.com/schema/client-config"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <network>
@@ -26,4 +26,11 @@
             <address>127.0.0.1:57500</address>
         </cluster-members>
     </network>
+
+    <serialization>
+        <data-serializable-factories>
+            <data-serializable-factory factory-id="1">org.yardstickframework.hazelcast.SampleValueSerializableFactory</data-serializable-factory>
+        </data-serializable-factories>
+    </serialization>
+
 </hazelcast-client>
