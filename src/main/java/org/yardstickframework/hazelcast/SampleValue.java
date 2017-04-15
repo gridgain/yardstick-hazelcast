@@ -14,14 +14,22 @@
 
 package org.yardstickframework.hazelcast;
 
+import com.hazelcast.nio.ObjectDataInput;
+import com.hazelcast.nio.ObjectDataOutput;
+import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
+
 import java.io.*;
 
 /**
  * Entity class for benchmark.
  */
-public class SampleValue implements Externalizable {
+public class SampleValue implements IdentifiedDataSerializable{
     /** */
     private int id;
+
+    public static int sampleValueSize=1001;
+    private byte[] value = new byte[sampleValueSize];
+
 
     /** */
     public SampleValue() {
@@ -42,18 +50,32 @@ public class SampleValue implements Externalizable {
         return id;
     }
 
-    /** {@inheritDoc} */
-    @Override public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        id = in.readInt();
-    }
 
-    /** {@inheritDoc} */
-    @Override public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(id);
-    }
 
     /** {@inheritDoc} */
     @Override public String toString() {
         return "Value [id=" + id + ']';
+    }
+
+    @Override
+    public void writeData(ObjectDataOutput objectDataOutput) throws IOException {
+        objectDataOutput.writeInt(id);
+        objectDataOutput.writeByteArray(value);
+    }
+
+    @Override
+    public void readData(ObjectDataInput objectDataInput) throws IOException {
+        id = objectDataInput.readInt();
+        value = objectDataInput.readByteArray();
+    }
+
+    @Override
+    public int getFactoryId() {
+        return SampleValueSerializableFactory.FACTORY_ID;
+    }
+
+    @Override
+    public int getId() {
+        return SampleValueSerializableFactory.SAMPLE_ID;
     }
 }

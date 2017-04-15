@@ -52,6 +52,11 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
         jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
 
+
+
+        SampleValue.sampleValueSize = cfg.valueSize();
+
+
         HazelcastInstance instance = startedInstance(args.clientMode());
 
         if (instance == null) {
