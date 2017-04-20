@@ -58,8 +58,8 @@ For example if we need to run 2 `HazelcastNode` servers on localhost with `Hazel
 
 ```
 SERVER_HOSTS=localhost,localhost
-    
-# Note that -dn and -sn, which stand for data node and server node, are 
+
+# Note that -dn and -sn, which stand for data node and server node, are
 # native Yardstick parameters and are documented in Yardstick framework.
 CONFIGS="-b 1 -sb -dn HazelcastPutBenchmark -sn HazelcastNode"
 ```
@@ -84,7 +84,7 @@ For example for Ubuntu:
 # apt-get install git
 ```
 
-* Clone this repository and build project on one of amazon instances. Yardstick will copy the binary on all nodes self.
+* Clone this repository and build project on one of the Amazon instances. Yardstick will copy all the built binaries on all nodes automatically.
 
 ```
 git clone https://github.com/gridgain/yardstick-hazelcast
@@ -92,14 +92,14 @@ git clone https://github.com/gridgain/yardstick-hazelcast
 mvn clean package
 ```
 
-* Change `SERVER_HOSTS` and `DRIVER_HOSTS` properties in `config/benchmark.properties` file. 
-`SERVER_HOSTS` is comma-separated list of IP addresses where servers should be started, one server per host. 
-`DRIVER_HOSTS` is comma-separated list of IP addresses where drivers should be started, one driver per host, if the 
+* Change `SERVER_HOSTS` and `DRIVER_HOSTS` properties in `config/benchmark.properties` file.
+`SERVER_HOSTS` is comma-separated list of IP addresses where servers should be started, one server per host.
+`DRIVER_HOSTS` is comma-separated list of IP addresses where drivers should be started, one driver per host, if the
 property is not defined then the driver will be run on localhost.
 Property file contains many useful information about benchmarks such as `list of benchmarks`, `JVM opts` and etc. More details there
 [Properties And Command Line Arguments](https://github.com/gridgain/yardstick#properties-and-command-line-arguments)
 
-* Update IP addresses in network section from 
+* Update IP addresses in network section from
 `config/hazelcast-config.xml` and `config/hazelcast-client-config.xml` files. For example:
 
 ```
@@ -121,7 +121,7 @@ config/hazelcast-client-config.xml
 ```
 config/hazelcast-config.xml
 
-...  
+...
   <network>
     <port auto-increment="true">57500</port>
     <join>
@@ -135,11 +135,11 @@ config/hazelcast-config.xml
   </network>
 ...
 ```
-* This repository contains two main set benchmark for sync and async backups (see more details about it [there](http://docs.hazelcast.org/docs/3.8/manual/html-single/index.html#backing-up-maps)). 
-By default used set of benchmark for async backups. If you want to run benchmarks for sync backup then need to use 
-`benchmark-sync.properties` file. Perform `./bin/benchmark-run-all.sh` script for async backups or `./bin/benchmark-run-all.sh ./config/benchmark-sync.properties` for sync backups. 
+* This repository contains two main set benchmark for sync and async backups (see more details about it [there](http://docs.hazelcast.org/docs/3.8/manual/html-single/index.html#backing-up-maps)).
+By default used set of benchmark for async backups. If you want to run benchmarks for sync backup then need to use
+`benchmark-sync.properties` file. Perform `./bin/benchmark-run-all.sh` script for async backups or `./bin/benchmark-run-all.sh ./config/benchmark-sync.properties` for sync backups.
 For more details about running scripts see [Running Yardstick Benchmarks](https://github.com/gridgain/yardstick#running-yardstick-benchmarks).
-* After execution the script in `result` folder will be saved to results of benchmarks. For visualisation of results can be used `bin/jfreechart-graph-gen.sh` script. 
+* After execution the script in `result` folder will be saved to results of benchmarks. For visualisation of results can be used `bin/jfreechart-graph-gen.sh` script.
 For more details about the script see [JFreeChart Graphs](https://github.com/gridgain/yardstick#jfreechart-graphs).
 
 ## Issues
