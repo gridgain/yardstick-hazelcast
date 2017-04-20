@@ -16,11 +16,21 @@ The following benchmarks are provided:
 
 1. `HazelcastGetBenchmark` - benchmarks atomic distributed cache get operation
 2. `HazelcastPutBenchmark` - benchmarks atomic distributed cache put operation
-3. `HazelcastPutGetBenchmark` - benchmarks atomic distributed cache put and get operations together
-4. `HazelcastPutTxBenchmark` - benchmarks transactional distributed cache put operation
-5. `HazelcastPutGetTxBenchmark` - benchmarks transactional distributed cache put and get operations together
-6. `HazelcastSqlQueryBenchmark` - benchmarks distributed SQL query over cached data
-7. `HazelcastSqlQueryPutBenchmark` - benchmarks distributed SQL query with simultaneous cache updates
+3. `HazelcastSetBenchmark` - benchmarks atomic distributed cache set operation
+4. `HazelcastPutGetBenchmark` - benchmarks atomic distributed cache put and get operations together
+5. `HazelcastSetGetBenchmark` - benchmarks atomic distributed cache set and get operations together
+6. `HazelcastPutGetBatchBenchmark` - benchmarks atomic distributed cache set on many keys and getAll operations together
+7. `HazelcastPutTxBenchmark` - benchmarks transactional distributed cache put operation
+8. `HazelcastSetTxBenchmark` - benchmarks transactional distributed cache set operation
+9. `HazelcastSetGetTxOptimisticBenchmark` - benchmarks transactional distributed cache set and get operations together
+10. `HazelcastSetGetTxPessimisticBenchmark` - benchmarks transactional distributed cache set and getForUpdate operations together
+11. `HazelcastSqlQueryBenchmark` - benchmarks distributed SQL query over cached data
+12. `HazelcastSqlQueryPutBenchmark` - benchmarks distributed SQL query with simultaneous cache updates
+13. `HazelcastSqlQuerySetBenchmark` - benchmarks distributed SQL query with simultaneous cache sets
+14. `HazelcastPutAllBenchmark` - benchmarks atomic distributed cache putAll operation
+15. `HazelcastSetAllTxBenchmark` - benchmarks transactional distributed cache set operations in one transaction
+16. `HazelcastGetAllSetAllTxOptimisticBenchmark` - benchmarks transactional distributed cache set and get operations together
+17. `HazelcastGetAllSetAllTxPessimisticBenchmark` - benchmarks transactional distributed cache set and getForUpdate operations together
 
 ## Writing Hazelcast Benchmarks
 All benchmarks extend `HazelcastAbstractBenchmark` class. A new benchmark should also extend this abstract class and implement `test` method. This is the method that is actually benchmarked.
@@ -57,7 +67,6 @@ CONFIGS="-b 1 -sb -dn HazelcastPutBenchmark -sn HazelcastNode"
 ## Running on Amazon
 
 This repo contains all necessary scripts and properties files for a comparison Hazelcast with other products.
-You can easy run benchmark by using [yardstick-docker](https://github.com/yardstick-benchmarks/yardstick-docker) extension, but it might have an influence on performance.
 
 For running on Amazon EC2 need to perform the following steps:
 
@@ -65,7 +74,7 @@ For running on Amazon EC2 need to perform the following steps:
 
 The following actions need to perform on all instances:
 
-* Install Java, Maven and Git.
+* Install Java, Maven and Git on all instances.
 
 ```
 For example for Ubuntu:
@@ -75,7 +84,7 @@ For example for Ubuntu:
 # apt-get install git
 ```
 
-* Clone this repository (on all nodes path should be the same) and build project.
+* Clone this repository and build project on one of amazon instances. Yardstick will copy the binary on all nodes self.
 
 ```
 git clone https://github.com/gridgain/yardstick-hazelcast
@@ -90,7 +99,7 @@ property is not defined then the driver will be run on localhost.
 Property file contains many useful information about benchmarks such as `list of benchmarks`, `JVM opts` and etc. More details there
 [Properties And Command Line Arguments](https://github.com/gridgain/yardstick#properties-and-command-line-arguments)
 
-* Use `config/hazelcast-ec2.xml` config which using `AWS discovery` or update IP addresses in network section from 
+* Update IP addresses in network section from 
 `config/hazelcast-config.xml` and `config/hazelcast-client-config.xml` files. For example:
 
 ```
@@ -126,7 +135,10 @@ config/hazelcast-config.xml
   </network>
 ...
 ```
-* Perform `./bin/benchmark-run-all.sh` script. For more details about running scripts see [Running Yardstick Benchmarks](https://github.com/gridgain/yardstick#running-yardstick-benchmarks).
+* This repository contains two main set benchmark for sync and async backups (see more details about it [there](http://docs.hazelcast.org/docs/3.8/manual/html-single/index.html#backing-up-maps)). 
+By default used set of benchmark for async backups. If you want to run benchmarks for sync backup then need to use 
+`benchmark-sync.properties` file. Perform `./bin/benchmark-run-all.sh` script for async backups or `./bin/benchmark-run-all.sh ./config/benchmark-sync.properties` for sync backups. 
+For more details about running scripts see [Running Yardstick Benchmarks](https://github.com/gridgain/yardstick#running-yardstick-benchmarks).
 * After execution the script in `result` folder will be saved to results of benchmarks. For visualisation of results can be used `bin/jfreechart-graph-gen.sh` script. 
 For more details about the script see [JFreeChart Graphs](https://github.com/gridgain/yardstick#jfreechart-graphs).
 

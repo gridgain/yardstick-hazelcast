@@ -25,7 +25,12 @@
         <port auto-increment="true">57500</port>
 
         <join>
-            <multicast enabled="true"/>
+            <multicast enabled="false"/>
+            <tcp-ip enabled="true">
+                <member>127.0.0.1:57500</member>
+                <member>127.0.0.1:57501</member>
+                <member>127.0.0.1:57502</member>
+            </tcp-ip>
         </join>
     </network>
 

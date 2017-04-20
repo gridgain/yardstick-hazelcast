@@ -48,8 +48,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <yardstick.version>RELEASE</yardstick.version>
-        <hazelcast.version>3.8</hazelcast.version>
+        <yardstick.version>0.8.3</yardstick.version>
+        <hazelcast.version>3.8.1</hazelcast.version>
     </properties>
 
     <dependencies>

@@ -25,5 +25,7 @@
         <cluster-members>
             <address>127.0.0.1:57500</address>
         </cluster-members>
+        <connection-attempt-limit>50</connection-attempt-limit>
+        <connection-timeout>10000</connection-timeout>
     </network>
 </hazelcast-client>
