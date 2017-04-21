@@ -67,20 +67,6 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
         assert map != null;
 
-        try {
-            CacheSimpleConfig config = node.hazelcast().getConfig().getCacheConfig(cacheName);
-
-            BenchmarkUtils.println(cfg, "Cache configuration [" +
-                "name=" + cacheName + ", " +
-                "asyncBackup=" + config.getAsyncBackupCount() + ", " +
-                "syncBackup=" + config.getBackupCount() + ", " +
-                "memoryFormat=" + config.getInMemoryFormat() + ", " +
-                "clientMode=" + args.clientMode() + "].");
-        }
-        catch (Exception e) {
-            BenchmarkUtils.error("Failed to print cache configuration.", e);
-        }
-
         waitForNodes();
     }
 
