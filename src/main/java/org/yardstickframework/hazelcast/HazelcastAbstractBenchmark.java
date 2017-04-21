@@ -15,6 +15,7 @@
 package org.yardstickframework.hazelcast;
 
 import com.hazelcast.client.*;
+import com.hazelcast.config.CacheSimpleConfig;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
 
@@ -65,6 +66,20 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         map = node.hazelcast().getMap(cacheName);
 
         assert map != null;
+
+        try {
+            CacheSimpleConfig config = node.hazelcast().getConfig().getCacheConfig(cacheName);
+
+            BenchmarkUtils.println(cfg, "Cache configuration [" +
+                "name=" + cacheName + ", " +
+                "asyncBackup=" + config.getAsyncBackupCount() + ", " +
+                "syncBackup=" + config.getBackupCount() + ", " +
+                "memoryFormat=" + config.getInMemoryFormat() + ", " +
+                "clientMode=" + args.clientMode() + "].");
+        }
+        catch (Exception e) {
+            BenchmarkUtils.error("Failed to print cache configuration.", e);
+        }
 
         waitForNodes();
     }
