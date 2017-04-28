@@ -67,7 +67,7 @@ The following Hazelcast benchmark properties can be defined in the benchmark con
 * `-hzcfg <path>` or `--hzConfig <path>` - Path to Hazelcast configuration file
 * `-hzclicfg <path>` or `--hzClientConfig <path>` - Path to Hazelcast client configuration file
 * `-sb` or `--syncBackups` - Flag indicating whether synchronous backups are used, asynchronous is a default
-* `-cm` or `--clientMode` - Flag indicating whether Hazelcast client is used
+* `-nt` or `--nodeType` - Type of driver nodes. One of: `SERVER`, `CLIENT`, `LITE_MEMBER`
 * `-r <num>` or `--range <num>` - Range of keys that are randomly generated for cache operations
 * `-rb` or `--readBackups` - Flag indicating whether backup reads are enabled or not, disabled by default
 
