@@ -53,15 +53,15 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
 
         jcommander(cfg.commandLineArguments(), args, "<hazelcast-driver>");
 
-        HazelcastInstance instance = startedInstance(args.clientMode());
+        HazelcastInstance instance = startedInstance(args.nodeType());
 
         if (instance == null) {
-            node = new HazelcastNode(args.clientMode());
+            node = new HazelcastNode(args.nodeType());
 
             node.start(cfg);
         }
         else
-            node = new HazelcastNode(args.clientMode(), instance);
+            node = new HazelcastNode(args.nodeType(), instance);
 
         map = node.hazelcast().getMap(cacheName);
 
@@ -71,11 +71,11 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
     }
 
     /**
-     * @param clientMode Client mode.
+     * @param nodeType Node type.
      * @return Started instance.
      */
-    private static HazelcastInstance startedInstance(boolean clientMode) {
-        Collection<HazelcastInstance> col = clientMode ? HazelcastClient.getAllHazelcastClients() :
+    private static HazelcastInstance startedInstance(HazelcastNode.NodeType nodeType) {
+        Collection<HazelcastInstance> col = nodeType == HazelcastNode.NodeType.CLIENT ? HazelcastClient.getAllHazelcastClients() :
             Hazelcast.getAllHazelcastInstances();
 
         return col == null || col.isEmpty() ? null : col.iterator().next();
@@ -141,7 +141,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @return {@code True} if all nodes are started, {@code false} otherwise.
      */
     private boolean nodesStarted() {
-        int rmtNodeCnt = args.clientMode() ? args.nodes() - 1 : args.nodes();
+        int rmtNodeCnt = args.nodeType() == HazelcastNode.NodeType.CLIENT ? args.nodes() - 1 : args.nodes();
 
         return hazelcast().getCluster().getMembers().size() >= rmtNodeCnt;
     }

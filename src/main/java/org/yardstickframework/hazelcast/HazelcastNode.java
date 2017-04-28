@@ -18,6 +18,7 @@ import com.hazelcast.client.*;
 import com.hazelcast.client.config.*;
 import com.hazelcast.config.*;
 import com.hazelcast.core.*;
+import java.io.FileNotFoundException;
 import org.yardstickframework.*;
 
 import java.util.*;
@@ -28,11 +29,16 @@ import static org.yardstickframework.BenchmarkUtils.*;
  * Standalone Hazelcast node.
  */
 public class HazelcastNode implements BenchmarkServer {
+    /** Node type. */
+    public enum NodeType {
+        SERVER, CLIENT, LITE_MEMBER
+    }
+
     /** */
     private HazelcastInstance hz;
 
-    /** Client mode. */
-    private boolean clientMode;
+    /** Node type. */
+    private NodeType nodeType = NodeType.SERVER;
 
     /** */
     public HazelcastNode() {
@@ -40,13 +46,13 @@ public class HazelcastNode implements BenchmarkServer {
     }
 
     /** */
-    public HazelcastNode(boolean clientMode) {
-        this.clientMode = clientMode;
+    public HazelcastNode(NodeType nodeType) {
+        this.nodeType = nodeType;
     }
 
     /** */
-    public HazelcastNode(boolean clientMode, HazelcastInstance hz) {
-        this.clientMode = clientMode;
+    public HazelcastNode(NodeType nodeType, HazelcastInstance hz) {
+        this.nodeType = nodeType;
         this.hz = hz;
     }
 
@@ -56,30 +62,38 @@ public class HazelcastNode implements BenchmarkServer {
 
         jcommander(cfg.commandLineArguments(), args, "<hazelcast-node>");
 
+        System.out.println(nodeType);
+
         // HazelcastNode can not run in client mode, except the case when it's used inside HazelcastAbstractBenchmark.
-        if (clientMode) {
-            ClientConfig clientCfg = new XmlClientConfigBuilder(args.clientConfiguration()).build();
+        switch(nodeType) {
+            case CLIENT:
+                ClientConfig clientCfg = new XmlClientConfigBuilder(args.clientConfiguration()).build();
 
-            hz = HazelcastClient.newHazelcastClient(clientCfg);
+                hz = HazelcastClient.newHazelcastClient(clientCfg);
 
-            println(cfg, "Hazelcast client started.");
-        }
-        else {
-            for (Map.Entry<String, String> env : System.getenv().entrySet())
-                System.getProperties().setProperty(env.getKey(), env.getValue());
+                println(cfg, "Hazelcast client started.");
 
-            Config hzCfg = new XmlConfigBuilder(args.configuration()).build();
+                break;
 
-            configure(args, hzCfg, "map", false);
-            configure(args, hzCfg, "query", true);
+            case SERVER:
+            case LITE_MEMBER:
+                Config hzCfg = new XmlConfigBuilder(args.configuration()).build();
 
-            println(cfg, "Starting Hazelcast with configuration: " + hzCfg);
+                configure(args, hzCfg, "map", false);
+                configure(args, hzCfg, "query", true);
 
-            hz = Hazelcast.newHazelcastInstance(hzCfg);
+                if (nodeType == NodeType.LITE_MEMBER)
+                    hzCfg.setLiteMember(true);
 
-            println(cfg, "Hazelcast member started.");
-            println(cfg, "Hazelcast benchmark arguments: " + args);
-            println(cfg, "Hazelcast benchmark config: " + cfg);
+                println(cfg, "Starting Hazelcast with configuration: " + hzCfg);
+
+                hz = Hazelcast.newHazelcastInstance(hzCfg);
+
+                println(cfg, "Hazelcast member started.");
+                println(cfg, "Hazelcast benchmark arguments: " + args);
+                println(cfg, "Hazelcast benchmark config: " + cfg);
+
+                break;
         }
 
         assert hz != null;
