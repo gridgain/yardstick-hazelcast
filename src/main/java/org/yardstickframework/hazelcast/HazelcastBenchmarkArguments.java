@@ -41,7 +41,7 @@ public class HazelcastBenchmarkArguments {
 
     /** */
     @Parameter(names = {"-nt", "--nodeType"}, description = "Node type")
-    private HazelcastNode.NodeType nodeType = HazelcastNode.NodeType.SERVER;
+    private NodeType nodeType = NodeType.SERVER;
 
     /** */
     @Parameter(names = {"-r", "--range"}, description = "Key range")
@@ -81,7 +81,7 @@ public class HazelcastBenchmarkArguments {
     /**
      * @return Node type.
      */
-    public HazelcastNode.NodeType nodeType() {
+    public NodeType nodeType() {
         return nodeType;
     }
 

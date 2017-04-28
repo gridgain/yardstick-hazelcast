@@ -29,11 +29,6 @@ import static org.yardstickframework.BenchmarkUtils.*;
  * Standalone Hazelcast node.
  */
 public class HazelcastNode implements BenchmarkServer {
-    /** Node type. */
-    public enum NodeType {
-        SERVER, CLIENT, LITE_MEMBER
-    }
-
     /** */
     private HazelcastInstance hz;
 

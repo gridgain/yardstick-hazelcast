@@ -74,8 +74,8 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @param nodeType Node type.
      * @return Started instance.
      */
-    private static HazelcastInstance startedInstance(HazelcastNode.NodeType nodeType) {
-        Collection<HazelcastInstance> col = nodeType == HazelcastNode.NodeType.CLIENT ? HazelcastClient.getAllHazelcastClients() :
+    private static HazelcastInstance startedInstance(NodeType nodeType) {
+        Collection<HazelcastInstance> col = nodeType == NodeType.CLIENT ? HazelcastClient.getAllHazelcastClients() :
             Hazelcast.getAllHazelcastInstances();
 
         return col == null || col.isEmpty() ? null : col.iterator().next();
@@ -141,7 +141,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @return {@code True} if all nodes are started, {@code false} otherwise.
      */
     private boolean nodesStarted() {
-        int rmtNodeCnt = args.nodeType() == HazelcastNode.NodeType.CLIENT ? args.nodes() - 1 : args.nodes();
+        int rmtNodeCnt = args.nodeType() == NodeType.CLIENT ? args.nodes() - 1 : args.nodes();
 
         return hazelcast().getCluster().getMembers().size() >= rmtNodeCnt;
     }
