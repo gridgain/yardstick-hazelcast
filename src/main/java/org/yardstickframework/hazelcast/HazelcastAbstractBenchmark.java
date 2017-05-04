@@ -63,11 +63,11 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         else
             node = new HazelcastNode(args.nodeType(), instance);
 
+        waitForNodes();
+
         map = node.hazelcast().getMap(cacheName);
 
         assert map != null;
-
-        waitForNodes();
     }
 
     /**
@@ -131,7 +131,7 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
         });
 
         if (!nodesStarted()) {
-            println(cfg, "Waiting for " + (args.nodes() - 1) + " nodes to start...");
+            println(cfg, "Waiting for " + args.nodes() + " nodes to start...");
 
             nodesStartedLatch.await();
         }
@@ -141,9 +141,21 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
      * @return {@code True} if all nodes are started, {@code false} otherwise.
      */
     private boolean nodesStarted() {
-        int rmtNodeCnt = args.nodeType() == NodeType.CLIENT ? args.nodes() - 1 : args.nodes();
+        return numFullNodes() >= args.nodes();
+    }
 
-        return hazelcast().getCluster().getMembers().size() >= rmtNodeCnt;
+    /**
+     * @return number of non-lite members in cluster.
+     */
+    private int numFullNodes() {
+        int n = 0;
+
+        for (Member node : hazelcast().getCluster().getMembers()) {
+            if (!node.isLiteMember())
+                n++;
+        }
+
+        return n;
     }
 
     /**
