@@ -93,6 +93,14 @@ public class HazelcastBenchmarkArguments {
     }
 
     /**
+     *
+     * @param backups New backups value.
+     */
+    public void backups(int backups) {
+        this.backups = backups;
+    }
+
+    /**
      * @return Read backups flag.
      */
     public boolean readBackups() {
@@ -104,6 +112,14 @@ public class HazelcastBenchmarkArguments {
      */
     public int nodes() {
         return nodes;
+    }
+
+    /**
+     *
+     * @param nodes New nodes count.
+     */
+    public void nodes(int nodes) {
+        this.nodes = nodes;
     }
 
     /**
@@ -125,6 +141,14 @@ public class HazelcastBenchmarkArguments {
      */
     public String configuration() {
         return hzCfg;
+    }
+
+    /**
+     *
+     * @param hzCfg New configuration path.
+     */
+    public void configuration(String hzCfg) {
+        this.hzCfg = hzCfg;
     }
 
     /**

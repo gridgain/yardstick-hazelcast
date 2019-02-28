@@ -19,6 +19,7 @@ import com.hazelcast.client.config.*;
 import com.hazelcast.config.*;
 import com.hazelcast.core.*;
 import org.yardstickframework.*;
+import org.yardstickframework.hazelcast.util.HazelcastBenchmarkUtils;
 
 import static org.yardstickframework.BenchmarkUtils.*;
 
@@ -53,6 +54,8 @@ public class HazelcastNode implements BenchmarkServer {
         HazelcastBenchmarkArguments args = new HazelcastBenchmarkArguments();
 
         jcommander(cfg.commandLineArguments(), args, "<hazelcast-node>");
+
+        HazelcastBenchmarkUtils.setArgsFromProperties(cfg, args);
 
         // HazelcastNode can not run in client mode, except the case when it's used inside HazelcastAbstractBenchmark.
         switch(nodeType) {

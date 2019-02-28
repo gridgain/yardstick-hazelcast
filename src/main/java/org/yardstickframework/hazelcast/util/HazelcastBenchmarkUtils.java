@@ -15,6 +15,9 @@
 package org.yardstickframework.hazelcast.util;
 
 import java.util.*;
+import org.yardstickframework.BenchmarkConfiguration;
+import org.yardstickframework.BenchmarkUtils;
+import org.yardstickframework.hazelcast.HazelcastBenchmarkArguments;
 
 /**
  * Utils.
@@ -64,6 +67,41 @@ public class HazelcastBenchmarkUtils {
             t.join();
 
         return errors;
+    }
+
+    /**
+     *
+     * @param cfg Benchmark configuration.
+     */
+    public static void setArgsFromProperties(BenchmarkConfiguration cfg, HazelcastBenchmarkArguments args){
+        Map<String, String> customProps = cfg.customProperties();
+
+        if(customProps.get("MAIN_CONFIG") != null)
+            args.configuration(customProps.get("MAIN_CONFIG"));
+
+        if(customProps.get("BACKUPS") != null)
+            args.backups(Integer.valueOf(customProps.get("BACKUPS")));
+
+        if(args.nodes() == 1){
+            if (customProps.get("NODES_NUM") != null)
+                args.nodes(Integer.valueOf(customProps.get("NODES_NUM")));
+            else {
+                int nodesNum = 0;
+
+                String sHosts = customProps.get("SERVER_HOSTS");
+                String dHosts = customProps.get("DRIVER_HOSTS");
+
+                if (sHosts != null)
+                    nodesNum += sHosts.split(",").length;
+
+                if (dHosts != null)
+                    nodesNum += dHosts.split(",").length;
+
+                BenchmarkUtils.println(String.format("Setting nodes num as %d", nodesNum));
+
+                args.nodes(nodesNum);
+            }
+        }
     }
 
     /**
