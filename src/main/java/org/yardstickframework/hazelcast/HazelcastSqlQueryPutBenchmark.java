@@ -14,7 +14,7 @@
 
 package org.yardstickframework.hazelcast;
 
-import com.hazelcast.query.*;
+import com.hazelcast.query.impl.predicates.SqlPredicate;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.yardstickframework.*;
 import org.yardstickframework.hazelcast.querymodel.*;

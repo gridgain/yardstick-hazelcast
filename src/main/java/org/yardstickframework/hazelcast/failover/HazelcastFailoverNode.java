@@ -17,7 +17,7 @@
 
 package org.yardstickframework.hazelcast.failover;
 
-import com.hazelcast.core.IMap;
+import com.hazelcast.map.IMap;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.util.List;

@@ -14,7 +14,7 @@
 
 package org.yardstickframework.hazelcast;
 
-import com.hazelcast.query.SqlPredicate;
+import com.hazelcast.query.impl.predicates.SqlPredicate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;

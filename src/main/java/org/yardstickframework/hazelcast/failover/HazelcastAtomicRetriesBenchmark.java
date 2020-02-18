@@ -17,7 +17,6 @@
 
 package org.yardstickframework.hazelcast.failover;
 
-import com.hazelcast.map.EntryBackupProcessor;
 import com.hazelcast.map.EntryProcessor;
 import java.util.Map;
 
@@ -69,31 +68,13 @@ public class HazelcastAtomicRetriesBenchmark extends HazelcastFailoverAbstractBe
     /**
      *
      */
-    private static class TestEntryProcessor implements EntryProcessor {
+    private static class TestEntryProcessor implements EntryProcessor<Object, Object, Object> {
         /** Serial version uid. */
         private static final long serialVersionUID = 0;
 
         /** {@inheritDoc} */
         @Override public Object process(Map.Entry entry) {
             return "key";
-        }
-
-        /** {@inheritDoc} */
-        @Override public EntryBackupProcessor getBackupProcessor() {
-            return new TestEntryBackupProcessor();
-        }
-    }
-
-    /**
-     *
-     */
-    private static class TestEntryBackupProcessor implements EntryBackupProcessor {
-        /** Serial version uid. */
-        private static final long serialVersionUID = 0;
-
-        /** {@inheritDoc} */
-        @Override public void processBackup(Map.Entry entry) {
-            // No-op.
         }
     }
 }

@@ -17,7 +17,7 @@
 
 package org.yardstickframework.hazelcast.failover;
 
-import com.hazelcast.core.TransactionalMap;
+import com.hazelcast.transaction.TransactionalMap;
 import com.hazelcast.transaction.TransactionContext;
 import com.hazelcast.transaction.TransactionOptions;
 import java.util.HashSet;
