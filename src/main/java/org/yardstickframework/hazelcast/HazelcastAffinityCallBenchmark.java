@@ -25,7 +25,7 @@ public class HazelcastAffinityCallBenchmark extends HazelcastAbstractBenchmark {
     /**
      *
      */
-    protected HazelcastAffinityCallBenchmark() {
+    public HazelcastAffinityCallBenchmark() {
         super("compute");
     }
 
