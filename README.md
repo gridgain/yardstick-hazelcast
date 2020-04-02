@@ -48,6 +48,8 @@ The following benchmarks are provided:
 15. `HazelcastSetAllTxBenchmark` - benchmarks transactional distributed cache set operations in one transaction
 16. `HazelcastGetAllSetAllTxOptimisticBenchmark` - benchmarks transactional distributed cache set and get operations together
 17. `HazelcastGetAllSetAllTxPessimisticBenchmark` - benchmarks transactional distributed cache set and getForUpdate operations together
+17. `HazelcastAffinityCallBenchmark` - benchmarks affinity calls
+
 
 ## Writing Hazelcast Benchmarks
 All benchmarks extend `HazelcastAbstractBenchmark` class. A new benchmark should also extend this abstract class and implement `test` method. This is the method that is actually benchmarked.
