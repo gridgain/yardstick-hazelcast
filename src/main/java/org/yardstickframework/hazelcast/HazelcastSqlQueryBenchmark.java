@@ -14,7 +14,7 @@
 
 package org.yardstickframework.hazelcast;
 
-import com.hazelcast.query.*;
+import com.hazelcast.query.impl.predicates.SqlPredicate;
 import org.yardstickframework.*;
 import org.yardstickframework.hazelcast.querymodel.*;
 import org.yardstickframework.hazelcast.util.*;

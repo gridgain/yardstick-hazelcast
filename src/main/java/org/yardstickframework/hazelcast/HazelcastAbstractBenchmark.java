@@ -15,8 +15,12 @@
 package org.yardstickframework.hazelcast;
 
 import com.hazelcast.client.*;
+import com.hazelcast.cluster.Member;
+import com.hazelcast.cluster.MembershipEvent;
+import com.hazelcast.cluster.MembershipListener;
 import com.hazelcast.config.CacheSimpleConfig;
 import com.hazelcast.core.*;
+import com.hazelcast.map.IMap;
 import org.yardstickframework.*;
 
 import java.util.*;
@@ -122,10 +126,6 @@ public abstract class HazelcastAbstractBenchmark extends BenchmarkDriverAdapter 
             }
 
             @Override public void memberRemoved(MembershipEvent evt) {
-                // No-op.
-            }
-
-            @Override public void memberAttributeChanged(MemberAttributeEvent memberAttributeEvent) {
                 // No-op.
             }
         });

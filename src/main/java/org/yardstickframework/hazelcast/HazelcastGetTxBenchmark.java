@@ -17,7 +17,7 @@ package org.yardstickframework.hazelcast;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.hazelcast.core.TransactionalMap;
+import com.hazelcast.transaction.TransactionalMap;
 import com.hazelcast.transaction.TransactionContext;
 import com.hazelcast.transaction.TransactionOptions;
 import org.yardstickframework.BenchmarkConfiguration;
